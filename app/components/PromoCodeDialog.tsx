@@ -42,8 +42,8 @@ export default function PromoCodeDialog({ open, onClose }: PromoCodeDialogProps)
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black"><Ticket size={18} /></span>
               <input
                 type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
+                value={code.toUpperCase()}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
                 placeholder="Put your Promo Code / Shukran Id here"
                 className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-3 text-base font-bold text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500"
               />

@@ -206,25 +206,29 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     <div className="mt-2 text-xs">
                         {data.promoCode ? (
                             <div className="flex items-center gap-2">
-                                 <button
-                                type="button"
-                                onClick={() => setPromoOpen(true)}
-                                className="flex items-center gap-2 font-medium text-black hover:text-red-600 text-lg"
-                            >
-                                {data.promoCode}
-                            </button>
                                 <button
                                     type="button"
-                                    onClick={() => onChange({ promoCode: "" })}
-                                    className="text-gray-500 hover:text-red-600 text-[11px]"
-                                    aria-label="Remove promo code"
-                                >Remove</button>
+                                    onClick={() => setPromoOpen(true)}
+                                    className="flex items-center gap-2 font-medium text-black text-base"
+                                >
+                                    <Ticket size={16} />
+                                    <span className="font-bold underline">{data.promoCode}</span>
+                                    <span className="text-xs">(Added Promo Code)</span>
+                                </button>
+                            <button
+                                type="button"
+                                onClick={() => onChange({ promoCode: "" })}
+                                className="text-red-600 underline text-base ml-2"
+                                aria-label="Remove promo code"
+                            >
+                                Remove
+                            </button>
                             </div>
                         ) : (
                             <button
                                 type="button"
                                 onClick={() => setPromoOpen(true)}
-                                className="flex items-center gap-2 font-medium text-black hover:text-red-600 text-lg"
+                                className="flex items-center gap-2 font-medium text-black text-lg"
                             >
                                 <Ticket size={16} /> <span className="font-bold underline">Promo Code / Shukran Id</span>
                             </button>
@@ -256,7 +260,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 <div className="md:col-span-1 flex">
                     <button
                         type="submit"
-                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-7 py-3 text-base font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-7 py-3 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                         Show cars
                     </button>
