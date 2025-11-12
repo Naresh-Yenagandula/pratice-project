@@ -62,7 +62,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
         >
             {/* Removed global top bar; checkbox now lives contextually */}
             {/* Header row removed checkbox per new placement requirement */}
-            <div className="hidden md:grid grid-cols-5 gap-5 items-end text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-base">
+            <div className="hidden lg:grid grid-cols-5 gap-5 items-end text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-base">
                 <div className={sameReturn && showReturnLocation ? 'font-medium text-black col-span-2' : 'font-medium text-black'}>Pickup {showReturnLocation ? "& Return": null} Location</div>
                 {showReturnLocation && !sameReturn && <div className="font-medium text-black"></div>}
                 <div className="font-medium text-black">Pickup Date & Time</div>
@@ -72,14 +72,14 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2 md:gap-3 xl:gap-4 2xl:gap-5 items-start">
                 <div className={sameReturn && showReturnLocation ? 'relative lg:col-span-2' : 'relative'}>
                     {/* Mobile label with conditional checkbox when sameReturn true */}
-                    <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
+                    <div className="lg:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
                         <span>Pickup Location</span>
                         {showReturnLocation && sameReturn && (
                             <label className="flex items-center gap-1 text-black cursor-pointer select-none font-bold pb-2 text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
-                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: "" } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                 <span className="font-bold">Same Return Location</span>
@@ -88,12 +88,12 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     </div>
                     {/* Desktop top-right checkbox when sameReturn true */}
                     {showReturnLocation && sameReturn && (
-                        <div className="hidden md:block absolute -top-7 right-0">
+                        <div className="hidden lg:block absolute -top-7 right-0">
                             <label className="flex items-center gap-2 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
-                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: "" } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                     <span className="font-bold">Same Return Location</span>
@@ -130,25 +130,25 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 {showReturnLocation && !sameReturn ? (
                     <div className="relative">
                         {/* Mobile label with checkbox when not sameReturn */}
-                        <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
+                        <div className="lg:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
                             <span>Return Location</span>
-                            <label className="md:hidden flex items-center gap-1 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
+                            <label className="lg:hidden flex items-center gap-1 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
-                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: "" } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                 <span className="font-bold">Same Return Location</span>
                             </label>
                         </div>
                         {/* Desktop top-right checkbox when not sameReturn */}
-                        <div className="hidden md:block absolute -top-7 right-0">
+                        <div className="hidden lg:block absolute -top-7 right-0">
                             <label className="flex items-center gap-2 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
-                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: "" } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                     <span className="font-bold">Same Return Location</span>
@@ -183,7 +183,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     </div>
                 ) : null}
                 <div>
-                        <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1">Pickup Date & Time</div>
+                        <div className="lg:hidden text-xs md:text-sm font-medium text-black mb-1">Pickup Date & Time</div>
                     <div className="relative">
                         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
                             <Calendar size={20} />
@@ -235,7 +235,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 </div>
                 {showReturnLocation && (
                     <div>
-                        <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1">Return Date & Time</div>
+                        <div className="lg:hidden text-xs md:text-sm font-medium text-black mb-1">Return Date & Time</div>
                         <div className="relative">
                             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
                                 <Calendar size={20} />

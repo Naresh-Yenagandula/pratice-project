@@ -185,7 +185,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             >
               <ChevronLeft size={18} />
             </button>
-            <div className="grid grid-cols-2 gap-4 flex-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
               {/* Month A */}
               <div>
                 <h4 className="text-center font-semibold mb-6 text-black text-lg lg:text-base">{formatMonthLabel(monthA[0])}</h4>
@@ -218,8 +218,8 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   })}
                 </div>
               </div>
-              {/* Month B */}
-              <div>
+              {/* Month B (hidden on mobile) */}
+              <div className="hidden md:block">
                 <h4 className="text-center font-semibold mb-6 text-black text-lg lg:text-base">{formatMonthLabel(monthB[0])}</h4>
                 <div className="grid grid-cols-7 text-sm lg:text-xs text-black mb-2 font-medium">
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(d => <div key={d} className="text-center">{d}</div>)}
@@ -262,7 +262,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             </button>
           </div>
           {/* Side-by-side date/time sections with time controls below each */}
-          <div className={`mt-8 border-t pt-5 grid ${singleMode ? 'grid-cols-1' : 'grid-cols-2'} gap-8`}>
+          <div className={`mt-8 border-t pt-5 grid ${singleMode ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-8`}>
             <div>
               <p className="text-base lg:text-sm text-black font-semibold mb-1">Pickup Date & Time</p>
               <h4 className="font-semibold text-black text-lg lg:text-base">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
