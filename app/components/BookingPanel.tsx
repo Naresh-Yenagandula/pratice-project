@@ -48,7 +48,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
 
     return (
         <form
-            className="flex flex-col gap-3"
+            className="flex flex-col gap-1"
             onSubmit={e => {
                 e.preventDefault();
                 // Log all booking data across tabs
@@ -57,7 +57,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
         >
             {/* Removed global top bar; checkbox now lives contextually */}
             {/* Header row removed checkbox per new placement requirement */}
-            <div className="hidden md:grid grid-cols-12 gap-3 items-end text-lg">
+            <div className="hidden md:grid grid-cols-12 gap-x-10 items-end text-lg">
                 <div className={(sameReturn || !showReturnLocation ? "col-span-4" : "col-span-2") + " text-lg font-medium text-black"}>Pickup {showReturnLocation? "& Return":""} Location </div>
                 {showReturnLocation && !sameReturn && (
                     <div className="col-span-2 text-lg font-medium text-black"></div>
@@ -71,20 +71,20 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 <div className="col-span-2" />
             </div>
             {/* Inputs row */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-x-3 items-start">
                 <div className={(sameReturn || !showReturnLocation ? "md:col-span-4" : "md:col-span-2") + " relative"}>
                     {/* Mobile label with conditional checkbox when sameReturn true */}
                     <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
                         <span>Pickup Location</span>
                         {showReturnLocation && sameReturn && (
-                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none font-bold">
+                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none font-bold pb-2">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold">Same Return Location</span>
+                                <span className="font-bold text-lg">Same Return Location</span>
                             </label>
                         )}
                     </div>
@@ -98,7 +98,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold">Same Return Location</span>
+                                    <span className="font-bold text-lg">Same Return Location</span>
                             </label>
                         </div>
                     )}
@@ -141,7 +141,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold">Same Return Location</span>
+                                <span className="font-bold text-lg">Same Return Location</span>
                             </label>
                         </div>
                         {/* Desktop top-right checkbox when not sameReturn */}
@@ -153,7 +153,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold">Same Return Location</span>
+                                    <span className="font-bold text-lg">Same Return Location</span>
                             </label>
                         </div>
                         <div className="relative">

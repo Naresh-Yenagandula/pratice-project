@@ -22,7 +22,7 @@ export default function BookingTab() {
 
     return (
         <section>
-            <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="w-full px-4 sm:px-10 lg:px-32">
                 <div
                     role="tablist"
                     aria-label="Booking options"
@@ -57,7 +57,7 @@ export default function BookingTab() {
                         );
                     })}
                 </div>
-                <div className="pt-4 flex justify-center">
+                <div className="pt-8 flex justify-center">
                     <div
                         role="tabpanel"
                         id={`panel-${activeTab}`}
