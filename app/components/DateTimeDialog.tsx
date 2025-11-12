@@ -58,6 +58,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
   const goNext = () => setStartMonth(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   const goPrev = () => setStartMonth(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
   const today = new Date();
+  const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
   const minMonth = new Date(today.getFullYear(), today.getMonth(), 1);
   const canGoPrev = startMonth.getTime() > minMonth.getTime();
 
@@ -194,19 +195,23 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 </div>
                 <div className="grid grid-cols-7 gap-1 text-base lg:text-sm">
                   {monthA.map(d => {
+                    const isPast = d < startOfToday;
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
                     const range = inRange(d);
                     const baseClasses = "py-2 rounded-md transition-colors";
-                    const stateClasses = start || end
-                      ? "bg-black text-white"
-                      : range
-                        ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
-                        : "text-black hover:bg-red-50 hover:text-red-600";
+                    const stateClasses = isPast
+                      ? "text-gray-300 cursor-not-allowed"
+                      : start || end
+                        ? "bg-black text-white"
+                        : range
+                          ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
+                          : "text-black hover:bg-red-50 hover:text-red-600";
                     return (
                       <button
                         key={d.getTime()}
                         type="button"
+                        disabled={isPast}
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
@@ -226,19 +231,23 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 </div>
                 <div className="grid grid-cols-7 gap-1 text-base lg:text-sm">
                   {monthB.map(d => {
+                    const isPast = d < startOfToday;
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
                     const range = inRange(d);
                     const baseClasses = "py-2 rounded-md transition-colors";
-                    const stateClasses = start || end
-                      ? "bg-black text-white"
-                      : range
-                        ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
-                        : "text-black hover:bg-red-50 hover:text-red-600";
+                    const stateClasses = isPast
+                      ? "text-gray-300 cursor-not-allowed"
+                      : start || end
+                        ? "bg-black text-white"
+                        : range
+                          ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
+                          : "text-black hover:bg-red-50 hover:text-red-600";
                     return (
                       <button
                         key={d.getTime()}
                         type="button"
+                        disabled={isPast}
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
