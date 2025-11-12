@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { X } from "lucide-react";
 
 interface LocationPickerProps {
     field: "pickup" | "returnLoc";
@@ -91,10 +92,14 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
             role="dialog"
             aria-label={field === "pickup" ? "Select pickup location" : "Select return location"}
             ref={containerRef}
-            className="z-50 w-screen rounded-none border-0 bg-white shadow-xl text-sm overflow-hidden px-2 md:px-8 py-4"
-            style={{ maxWidth: "80vw" }}
+            className="z-50 w-screen rounded-none border-0 bg-white shadow-xl text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
         >
-            <div className="flex flex-col md:flex-row h-[28rem]">
+            {/* Mobile header */}
+            <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-gray-200 bg-white">
+                <h2 className="text-base font-semibold text-black">{field === 'pickup' ? 'Pickup Location' : 'Return Location'}</h2>
+                <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
+            </div>
+            <div className="flex flex-col md:flex-row md:h-[28rem] h-[calc(100vh-3.5rem)]">
                 {/* Left lists */}
                 <div className="md:w-1/2 border-r border-gray-200 flex flex-col overflow-hidden" onKeyDown={handleListKey} tabIndex={0} aria-label="Locations list">
                     <div className="flex-1 overflow-y-auto custom-scroll">
@@ -161,6 +166,10 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                             <div className="h-full w-full rounded-md bg-gray-100 flex items-center justify-center text-gray-500 text-xs">
                                 Map placeholder
                             </div>
+                        </div>
+                        {/* Desktop close */}
+                        <div className="hidden md:block absolute top-4 right-4">
+                            <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={18} /></button>
                         </div>
                     </div>
                 </div>

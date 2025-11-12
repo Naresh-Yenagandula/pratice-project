@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Truck } from "lucide-react";
+import { ArrowLeft, Truck, X } from "lucide-react";
 
 import { useBooking } from "./BookingContext";
 
@@ -33,15 +33,18 @@ export default function DeliveryDialog({ open, onClose, onBack, target }: Delive
   if (!open) return null;
 
   return (
-    <div role="dialog" aria-label={target === 'pickup' ? 'Deliver to me' : 'Collect from me'} aria-modal="true" className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-2 md:px-8 py-4" style={{ maxWidth: "90vw" }}>
-      <div ref={ref} className="w-full mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="p-6 border-b flex items-center gap-4">
+    <div role="dialog" aria-label={target === 'pickup' ? 'Deliver to me' : 'Collect from me'} aria-modal="true" className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto" style={{ maxWidth: "90vw" }}>
+      <div ref={ref} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl overflow-hidden h-full md:h-auto flex flex-col">
+        <div className="p-4 md:p-6 border-b flex items-center gap-4">
           <button onClick={onBack} className="border rounded-md px-3 py-2 text-sm font-medium hover:bg-gray-50 flex items-center gap-1 text-black"><ArrowLeft size={16} /> Back</button>
           <h2 className="text-lg font-semibold text-black flex items-center gap-2">
             <Truck size={18} /> {target === 'pickup' ? 'Deliver to me' : 'Collect from me'}
           </h2>
+          <div className="ml-auto">
+            <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
+          </div>
         </div>
-        <div className="p-6 flex flex-col gap-6">
+        <div className="p-4 md:p-6 flex flex-col gap-6 flex-1 overflow-y-auto">
           <div className="grid md:grid-cols-12 gap-6 items-start">
             <div className="md:col-span-5">
               <label className="block text-sm font-medium text-black mb-1">City</label>

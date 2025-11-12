@@ -28,15 +28,15 @@ export default function PromoCodeDialog({ open, onClose }: PromoCodeDialogProps)
   if (!open) return null;
 
   return (
-    <div role="dialog" aria-label="Add Promo Code / Shukran Id" aria-modal="true" className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-2 md:px-8 py-4" style={{ maxWidth: "80vw" }}>
-      <div ref={ref} className="w-full mx-auto bg-white rounded-2xl shadow-xl max-w-xl overflow-hidden">
-        <div className="p-6 flex items-center justify-between">
+    <div role="dialog" aria-label="Add Promo Code / Shukran Id" aria-modal="true" className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto" style={{ maxWidth: "80vw" }}>
+      <div ref={ref} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl md:max-w-xl overflow-hidden h-full md:h-auto flex flex-col">
+        <div className="p-4 md:p-6 flex items-center justify-between border-b">
           <h2 className="text-lg font-semibold text-black">Add Promo Code / Shukran Id</h2>
           <button onClick={onClose} aria-label="Close" className="text-black hover:text-red-600 p-1">
             <X size={18} />
           </button>
         </div>
-        <div className="p-6 space-y-5">
+        <div className="p-4 md:p-6 space-y-5 flex-1 overflow-y-auto">
           <div className="flex items-center gap-3">
             <div className="relative flex-1">
               <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black"><Ticket size={18} /></span>

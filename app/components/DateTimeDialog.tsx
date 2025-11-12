@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Building2, Plane, ChevronLeft, ChevronRight } from "lucide-react";
+import { Building2, Plane, ChevronLeft, ChevronRight, X } from "lucide-react";
 
 interface DateTimeDialogProps {
   open: boolean;
@@ -135,12 +135,17 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
       role="dialog"
       aria-label="Date time selection"
       aria-modal="true"
-      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-2 md:px-8 py-4"
+      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
       style={{ maxWidth: "80vw" }}
     >
-      <div ref={dialogRef} className="w-full mx-auto bg-white rounded-2xl shadow-xl grid md:grid-cols-2 overflow-hidden">
+      <div ref={dialogRef} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl grid md:grid-cols-2 overflow-hidden h-full md:h-auto">
+        {/* Mobile header */}
+        <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200">
+          <h2 className="text-base font-semibold text-black">Select Date & Time</h2>
+          <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
+        </div>
         {/* LEFT SIDE summary */}
-        <div className="bg-gray-50 p-6 border-r">
+        <div className="bg-gray-50 p-4 md:p-6 border-r overflow-y-auto">
           <div className="flex flex-col space-y-8">
             <div>
               <div className="flex items-center space-x-2">
@@ -168,7 +173,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
           </div>
         </div>
         {/* RIGHT SIDE calendars & time */}
-        <div className="relative p-10">
+  <div className="relative p-4 md:p-10 overflow-y-auto">
           <div className="flex items-start justify-between gap-6 relative">
             {/* Previous Arrow */}
             <button
@@ -350,6 +355,10 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
               </div>
             </div>
           )}
+        </div>
+        {/* Desktop close button */}
+        <div className="hidden md:block absolute top-4 right-4">
+          <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
         </div>
       </div>
     </div>
