@@ -55,15 +55,18 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 console.log("ALL_BOOKING_DATA", JSON.parse(JSON.stringify(dataByTab)));
             }}
         >
+            {/* Removed global top bar; checkbox now lives contextually */}
+            {/* Header row removed checkbox per new placement requirement */}
             <div className="hidden lg:grid grid-cols-5 gap-6 items-end text-lg">
-                <div className="text-lg font-medium text-black">{showReturnLocation ? 'Pickup Location' : 'Pickup Location'}</div>
+                <div className={sameReturn && showReturnLocation ? 'text-lg font-medium text-black col-span-2' : 'text-lg font-medium text-black'}>Pickup {showReturnLocation ? "& Return": null} Location</div>
                 {showReturnLocation && !sameReturn && <div className="text-lg font-medium text-black"></div>}
+                {/* {sameReturn && showReturnLocation && <div className="col-span-0" />} */}
                 <div className="text-lg font-medium text-black">Pickup Date & Time</div>
                 {showReturnLocation && <div className="text-lg font-medium text-black">Return Date & Time</div>}
             </div>
             {/* Inputs row */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start">
-                <div className="relative">
+                <div className={sameReturn && showReturnLocation ? 'relative lg:col-span-2' : 'relative'}>
                     {/* Mobile label with conditional checkbox when sameReturn true */}
                     <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
                         <span>Pickup Location</span>
@@ -120,7 +123,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         </button>
                     </div>
                 </div>
-                {showReturnLocation && !sameReturn && (
+                {showReturnLocation && !sameReturn ? (
                     <div className="relative">
                         {/* Mobile label with checkbox when not sameReturn */}
                         <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
@@ -174,7 +177,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         </button>
                     </div>
                     </div>
-                )}
+                ) : null}
                 <div>
                     <div className="md:hidden text-lg font-medium text-black mb-2">Pickup Date & Time</div>
                     <div className="relative">
