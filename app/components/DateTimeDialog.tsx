@@ -268,6 +268,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
               <h4 className="font-semibold text-black text-lg lg:text-base">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
               <div className="flex items-center space-x-2 mt-3">
                 <button
+                  type="button"
                   className="px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
                     const [time, meridiem] = pickupTime.split(' ');
@@ -280,6 +281,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 >–</button>
                 <span className="font-semibold text-black">{pickupTime.split(' ')[0]}</span>
                 <button
+                  type="button"
                   className="px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
                     const [time, meridiem] = pickupTime.split(' ');
@@ -291,6 +293,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   }}
                 >+</button>
                 <button
+                  type="button"
                   className={`ml-3 px-4 py-2 rounded ${pickupTime.endsWith('AM') ? 'bg-black text-white' : 'text-black'}`}
                   onClick={() => {
                     if (!pickupTime.endsWith('AM')) {
@@ -301,6 +304,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   }}
                 >AM</button>
                 <button
+                  type="button"
                   className={`px-4 py-2 rounded ${pickupTime.endsWith('PM') ? 'bg-black text-white' : 'text-black'}`}
                   onClick={() => {
                     if (!pickupTime.endsWith('PM')) {
@@ -318,6 +322,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 <h4 className="font-semibold text-black text-lg lg:text-base">{secondDate ? formatDisplay(secondDate, returnTime) : selectingReturn ? 'Select return' : 'Return'}</h4>
                 <div className="flex items-center space-x-2 mt-3">
                   <button
+                    type="button"
                     className="px-3 py-2 rounded text-black hover:bg-gray-100"
                     onClick={() => {
                       const [time, meridiem] = returnTime.split(' ');
@@ -330,6 +335,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   >–</button>
                   <span className="font-semibold text-black">{returnTime.split(' ')[0]}</span>
                   <button
+                    type="button"
                     className="px-3 py-2 rounded text-black hover:bg-gray-100"
                     onClick={() => {
                       const [time, meridiem] = returnTime.split(' ');
@@ -341,6 +347,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                     }}
                   >+</button>
                   <button
+                    type="button"
                     className={`ml-3 px-4 py-2 rounded ${returnTime.endsWith('AM') ? 'bg-black text-white' : 'text-black'}`}
                     onClick={() => {
                       if (!returnTime.endsWith('AM')) {
@@ -351,6 +358,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                     }}
                   >AM</button>
                   <button
+                    type="button"
                     className={`px-4 py-2 rounded ${returnTime.endsWith('PM') ? 'bg-black text-white' : 'text-black'}`}
                     onClick={() => {
                       if (!returnTime.endsWith('PM')) {
