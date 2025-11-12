@@ -57,7 +57,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
         >
             {/* Removed global top bar; checkbox now lives contextually */}
             {/* Header row removed checkbox per new placement requirement */}
-            <div className="hidden lg:grid grid-cols-5 gap-5 items-end text-xs md:text-sm xl:text-sm 2xl:text-base">
+            <div className="hidden md:grid grid-cols-5 gap-5 items-end text-xs md:text-sm xl:text-sm 2xl:text-base">
                 <div className={sameReturn && showReturnLocation ? 'font-medium text-black col-span-2' : 'font-medium text-black'}>Pickup {showReturnLocation ? "& Return": null} Location</div>
                 {showReturnLocation && !sameReturn && <div className="font-medium text-black"></div>}
                 <div className="font-medium text-black">Pickup Date & Time</div>
@@ -116,9 +116,9 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("pickup"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-2 text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
+                            className="flex items-center gap-2 text-red-600 md:text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
                         >
-                            <Truck size={16} /> <span className="font-bold">Deliver to me</span> <ChevronRight size={16} />
+                            <Truck size={16} className="text-red-600 md:text-black" /> <span className="font-bold">Deliver to me</span> <ChevronRight size={16} className="text-red-600 md:text-black" />
                         </button>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         {/* Mobile label with checkbox when not sameReturn */}
                         <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
                             <span>Return Location</span>
-                            <label className="flex items-center gap-1 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
+                            <label className="md:hidden flex items-center gap-1 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
@@ -170,9 +170,9 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("returnLoc"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-2 text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
+                            className="flex items-center gap-2 text-red-600 md:text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
                         >
-                            <Truck size={16} /> <span className="font-bold">Collect from me</span> <ChevronRight size={16} /> 
+                            <Truck size={16} className="text-red-600 md:text-black" /> <span className="font-bold">Collect from me</span> <ChevronRight size={16} className="text-red-600 md:text-black" /> 
                         </button>
                     </div>
                     </div>
@@ -196,7 +196,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
-                    <div className="mt-2 text-xs">
+                    <div className="mt-2 text-xs hidden md:block">
                         {data.promoCode ? (
                             <div className="flex items-center gap-2">
                                 <button
@@ -250,13 +250,45 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         </div>
                     </div>
                 )}
-                <div className="flex">
+                <div className="flex flex-col gap-2">
                     <button
                         type="submit"
                         className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-4 md:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-sm xl:text-sm 2xl:text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                         Show cars
                     </button>
+                    {/* Mobile promo code block after button */}
+                    <div className="md:hidden text-xs">
+                        {data.promoCode ? (
+                            <div className="flex items-center gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setPromoOpen(true)}
+                                    className="flex items-center gap-2 font-medium text-black text-[10px]"
+                                >
+                                    <Ticket size={16} />
+                                    <span className="font-bold underline">{data.promoCode}</span>
+                                    <span className="text-xs">(Added Promo Code)</span>
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => onChange({ promoCode: "" })}
+                                    className="text-red-600 underline text-[10px] ml-2"
+                                    aria-label="Remove promo code"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={() => setPromoOpen(true)}
+                                className="flex items-center gap-2 font-bold text-black text-sm"
+                            >
+                                <Ticket size={16} /> <span className="font-bold underline">Promo Code / Shukran Id</span>
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
             {openField && (

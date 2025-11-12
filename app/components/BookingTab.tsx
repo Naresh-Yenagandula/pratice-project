@@ -22,11 +22,11 @@ export default function BookingTab() {
 
     return (
         <section>
-            <div className="w-full px-4 sm:px-10 lg:px-32">
+            <div className="w-full px-3 sm:px-6 lg:px-20 xl:px-28 2xl:px-32 max-w-[1600px] mx-auto">
                 <div
                     role="tablist"
                     aria-label="Booking options"
-                    className="flex border-b border-gray-100 p-0 m-0"
+                    className="flex border-b border-gray-100 p-0 m-0 overflow-x-auto scrollbar-hide"
                     style={{ lineHeight: 1 }}
                 >
                     {tabs.map(t => {
@@ -41,10 +41,10 @@ export default function BookingTab() {
                                 tabIndex={isActive ? 0 : -1}
                                 onClick={() => setActiveTab(t.key)}
                                 className={`
-                                    px-5 py-6 text-2xl border-b-2
+                                    whitespace-nowrap px-4 py-3 text-base sm:text-lg md:text-xl xl:text-2xl 2xl:text-[32px] md:px-5 md:py-5 xl:py-6 border-b-2 transition-colors
                                     ${isActive
                                         ? "border-red-600 text-red-600 font-bold"
-                                        : "border-transparent text-gray-500"
+                                        : "border-transparent text-gray-500 hover:text-gray-700"
                                     }
                                 `}
                                 style={{
@@ -57,11 +57,12 @@ export default function BookingTab() {
                         );
                     })}
                 </div>
-                <div className="pt-8 flex justify-center">
+                <div className="pt-6 sm:pt-8 flex justify-center">
                     <div
                         role="tabpanel"
                         id={`panel-${activeTab}`}
                         aria-labelledby={activeTab}
+                        className="w-full"
                     >
                         <BookingPanel tabKey={activeTab} data={currentData} onChange={updateData} />
                     </div>
