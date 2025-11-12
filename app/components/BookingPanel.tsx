@@ -55,24 +55,15 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 console.log("ALL_BOOKING_DATA", JSON.parse(JSON.stringify(dataByTab)));
             }}
         >
-            {/* Removed global top bar; checkbox now lives contextually */}
-            {/* Header row removed checkbox per new placement requirement */}
-            <div className="hidden md:grid grid-cols-12 gap-x-10 items-end text-lg">
-                <div className={(sameReturn || !showReturnLocation ? "col-span-4" : "col-span-2") + " text-lg font-medium text-black"}>Pickup {showReturnLocation? "& Return":""} Location </div>
-                {showReturnLocation && !sameReturn && (
-                    <div className="col-span-2 text-lg font-medium text-black"></div>
-                )}
-                <div className="col-span-2 text-lg font-medium text-black">Pickup Date & Time</div>
-                {showReturnLocation ? (
-                    <div className="col-span-2 text-lg font-medium text-black">Return Date & Time</div>
-                ) : (
-                    <div className="col-span-2" />
-                )}
-                <div className="col-span-2" />
+            <div className="hidden lg:grid grid-cols-5 gap-6 items-end text-lg">
+                <div className="text-lg font-medium text-black">{showReturnLocation ? 'Pickup Location' : 'Pickup Location'}</div>
+                {showReturnLocation && !sameReturn && <div className="text-lg font-medium text-black"></div>}
+                <div className="text-lg font-medium text-black">Pickup Date & Time</div>
+                {showReturnLocation && <div className="text-lg font-medium text-black">Return Date & Time</div>}
             </div>
             {/* Inputs row */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-x-3 items-start">
-                <div className={(sameReturn || !showReturnLocation ? "md:col-span-4" : "md:col-span-2") + " relative"}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-start">
+                <div className="relative">
                     {/* Mobile label with conditional checkbox when sameReturn true */}
                     <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
                         <span>Pickup Location</span>
@@ -130,7 +121,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     </div>
                 </div>
                 {showReturnLocation && !sameReturn && (
-                    <div className="md:col-span-2 relative">
+                    <div className="relative">
                         {/* Mobile label with checkbox when not sameReturn */}
                         <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
                             <span>Return Location</span>
@@ -184,7 +175,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     </div>
                     </div>
                 )}
-                <div className="md:col-span-2">
+                <div>
                     <div className="md:hidden text-lg font-medium text-black mb-2">Pickup Date & Time</div>
                     <div className="relative">
                         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
@@ -236,7 +227,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     </div>
                 </div>
                 {showReturnLocation && (
-                    <div className="md:col-span-2">
+                    <div>
                         <div className="md:hidden text-lg font-medium text-black mb-2">Return Date & Time</div>
                         <div className="relative">
                             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
@@ -257,7 +248,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         </div>
                     </div>
                 )}
-                <div className="md:col-span-1 flex">
+                <div className="flex">
                     <button
                         type="submit"
                         className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-7 py-3 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
