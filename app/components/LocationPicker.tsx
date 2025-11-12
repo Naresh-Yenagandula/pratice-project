@@ -95,8 +95,8 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
             className="z-50 w-screen rounded-none border-0 bg-white shadow-xl text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
         >
             {/* Mobile header */}
-            <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-gray-200 bg-white">
-                <h2 className="text-base font-semibold text-black">{field === 'pickup' ? 'Pickup Location' : 'Return Location'}</h2>
+            <div className="flex md:hidden items-center justify-between px-4 py-4 border-b border-gray-200 bg-white">
+                <h2 className="text-lg font-semibold text-black">{field === 'pickup' ? 'Pickup Location' : 'Return Location'}</h2>
                 <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
             </div>
             <div className="flex flex-col md:flex-row md:h-[28rem] h-[calc(100vh-3.5rem)]">
@@ -104,7 +104,7 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                 <div className="md:w-1/2 border-r border-gray-200 flex flex-col overflow-hidden" onKeyDown={handleListKey} tabIndex={0} aria-label="Locations list">
                     <div className="flex-1 overflow-y-auto custom-scroll">
                         <div className="py-3">
-                            <h4 className="flex items-center gap-2 px-4 mb-2 font-semibold text-gray-800 text-sm">
+                            <h4 className="flex items-center gap-2 px-4 mb-2 font-semibold text-black text-base">
                                 <span className="text-lg">✈️</span> Airport Locations
                             </h4>
                             <ul className="divide-y divide-gray-100">
@@ -118,7 +118,7 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                                                 onClick={() => choose(a)}
                                                 onMouseEnter={() => setHoverPreview(a)}
                                                 onMouseLeave={() => setHoverPreview(null)}
-                                                className={`w-full text-left px-4 py-2 hover:bg-red-50 focus:outline-none ${selected?.name === a.name ? 'bg-red-50 text-red-700' : focused ? 'ring-2 ring-red-300 text-gray-900' : hoverPreview?.name === a.name ? 'bg-red-50 text-red-600' : 'text-gray-700'}`}
+                                                className={`w-full text-left px-4 py-2 hover:bg-red-50 focus:outline-none ${selected?.name === a.name ? 'bg-red-50 text-red-700' : focused ? 'ring-2 ring-red-300 text-black' : hoverPreview?.name === a.name ? 'bg-red-50 text-red-600' : 'text-black'}`}
                                             >
                                                 {a.name}
                                             </button>
@@ -129,7 +129,7 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                             </ul>
                         </div>
                         <div className="py-3 border-t border-gray-200">
-                            <h4 className="flex items-center gap-2 px-4 mb-2 font-semibold text-gray-800 text-sm">
+                            <h4 className="flex items-center gap-2 px-4 mb-2 font-semibold text-black text-base">
                                 <span className="text-lg">🏙️</span> Free Delivery Areas
                             </h4>
                             <ul className="divide-y divide-gray-100">
@@ -143,7 +143,7 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                                                 onClick={() => choose(a)}
                                                 onMouseEnter={() => setHoverPreview(a)}
                                                 onMouseLeave={() => setHoverPreview(null)}
-                                                className={`w-full text-left px-4 py-2 hover:bg-red-50 focus:outline-none ${selected?.name === a.name ? 'bg-red-50 text-red-700' : focused ? 'ring-2 ring-red-300 text-gray-900' : hoverPreview?.name === a.name ? 'bg-red-50 text-red-600' : 'text-gray-700'}`}
+                                                className={`w-full text-left px-4 py-2 hover:bg-red-50 focus:outline-none ${selected?.name === a.name ? 'bg-red-50 text-red-700' : focused ? 'ring-2 ring-red-300 text-black' : hoverPreview?.name === a.name ? 'bg-red-50 text-red-600' : 'text-black'}`}
                                             >
                                                 {a.name}
                                             </button>
@@ -158,12 +158,12 @@ export default function LocationPicker({ field, onSelect, onClose }: LocationPic
                 {/* Right detail pane */}
                 <div className="flex-1 flex flex-col">
                     <div className="p-5 h-full flex flex-col">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                        <h3 className="text-xl font-semibold text-black mb-3 flex items-center gap-2">
                             <span className="text-xl">🏢</span> {activeDetail?.name}
                         </h3>
-                        <p className="text-sm text-gray-700 mb-2">Sunday-Saturday : 08:00-22:00</p>
+                        <p className="text-base text-black mb-4 font-medium">Sunday-Saturday : 08:00-22:00</p>
                         <div className="flex-1">
-                            <div className="h-full w-full rounded-md bg-gray-100 flex items-center justify-center text-gray-500 text-xs">
+                            <div className="h-full w-full rounded-md bg-gray-100 flex items-center justify-center text-black text-sm font-medium">
                                 Map placeholder
                             </div>
                         </div>

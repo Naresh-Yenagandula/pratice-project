@@ -135,7 +135,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
       role="dialog"
       aria-label="Date time selection"
       aria-modal="true"
-      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
+  className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-base overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
       style={{ maxWidth: "80vw" }}
     >
       <div ref={dialogRef} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl grid md:grid-cols-2 overflow-hidden h-full md:h-auto">
@@ -145,14 +145,14 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
           <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
         </div>
         {/* LEFT SIDE summary */}
-        <div className="bg-gray-50 p-4 md:p-6 border-r overflow-y-auto">
+  <div className="bg-gray-50 p-5 md:p-7 border-r overflow-y-auto">
           <div className="flex flex-col space-y-8">
             <div>
               <div className="flex items-center space-x-2">
-                <Building2 size={18} className="text-gray-600" />
-                <h3 className="font-semibold text-lg">{pickupLocation || "Pickup Location"}</h3>
+                <Plane size={20} className="text-black" />
+                <h3 className="font-semibold text-xl text-black">{pickupLocation || "Pickup Location"}</h3>
               </div>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-base text-black mt-2 font-medium">
                 <span className="font-medium">Pickup:</span> {firstDate ? formatDisplay(firstDate, pickupTime) : pickupDateTime || "Select"}
               </p>
             </div>
@@ -161,10 +161,10 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 <div className="h-12 border-l ml-4 border-gray-300"></div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <Plane size={18} className="text-gray-600" />
-                    <h3 className="font-semibold text-lg">{returnLocation || "Return Location"}</h3>
+                    <Plane size={20} className="text-black" />
+                    <h3 className="font-semibold text-xl text-black">{returnLocation || "Return Location"}</h3>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-base text-black mt-2 font-medium">
                     <span className="font-medium">Return:</span> {secondDate ? formatDisplay(secondDate, returnTime) : returnDateTime || (selectingReturn ? "Select" : "")}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
           </div>
         </div>
         {/* RIGHT SIDE calendars & time */}
-  <div className="relative p-4 md:p-10 overflow-y-auto">
+  <div className="relative p-5 md:p-10 overflow-y-auto">
           <div className="flex items-start justify-between gap-6 relative">
             {/* Previous Arrow */}
             <button
@@ -188,11 +188,11 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             <div className="grid grid-cols-2 gap-4 flex-1">
               {/* Month A */}
               <div>
-                <h4 className="text-center font-semibold mb-2">{formatMonthLabel(monthA[0])}</h4>
-                <div className="grid grid-cols-7 text-xs text-gray-500 mb-1">
+                <h4 className="text-center font-semibold mb-3 text-black text-lg">{formatMonthLabel(monthA[0])}</h4>
+                <div className="grid grid-cols-7 text-sm text-black mb-2 font-medium">
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(d => <div key={d} className="text-center">{d}</div>)}
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-sm">
+                <div className="grid grid-cols-7 gap-1 text-base">
                   {monthA.map(d => {
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
@@ -204,7 +204,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
-                        className={`py-1.5 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-gray-800" : "hover:bg-gray-100"}`}
+                        className={`py-2 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-black" : "hover:bg-gray-100"}`}
                       >
                         {d.getDate()}
                       </button>
@@ -214,11 +214,11 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
               </div>
               {/* Month B */}
               <div>
-                <h4 className="text-center font-semibold mb-2">{formatMonthLabel(monthB[0])}</h4>
-                <div className="grid grid-cols-7 text-xs text-gray-500 mb-1">
+                <h4 className="text-center font-semibold mb-3 text-black text-lg">{formatMonthLabel(monthB[0])}</h4>
+                <div className="grid grid-cols-7 text-sm text-black mb-2 font-medium">
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(d => <div key={d} className="text-center">{d}</div>)}
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-sm">
+                <div className="grid grid-cols-7 gap-1 text-base">
                   {monthB.map(d => {
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
@@ -230,7 +230,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
-                        className={`py-1.5 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-gray-800" : "hover:bg-gray-100"}`}
+                        className={`py-2 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-black" : "hover:bg-gray-100"}`}
                       >
                         {d.getDate()}
                       </button>
@@ -250,14 +250,14 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             </button>
           </div>
           {/* Time Controls */}
-          <div className={`flex ${singleMode ? 'justify-start' : 'justify-between'} items-center border-t pt-4 mt-6`}>
+          <div className={`flex ${singleMode ? 'justify-start' : 'justify-between'} items-center border-t pt-5 mt-8`}>
             <div>
-              <p className="text-sm text-gray-500 font-medium">Pickup Date & Time</p>
-              <h4 className="font-semibold text-gray-800">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
+              <p className="text-base text-black font-semibold">Pickup Date & Time</p>
+              <h4 className="font-semibold text-black text-lg mt-1">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
             </div>
             <div className="flex items-center space-x-2">
               <button
-                className="border px-2 py-1 rounded text-gray-600 hover:text-black"
+                className="border px-3 py-2 rounded text-black hover:bg-gray-100"
                 onClick={() => {
                   // naive decrement: replace hour number
                   const [time, meridiem] = pickupTime.split(" ");
@@ -268,9 +268,9 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
                 }}
               >–</button>
-              <span className="font-semibold">{pickupTime.split(" ")[0]}</span>
+              <span className="font-semibold text-black">{pickupTime.split(" ")[0]}</span>
               <button
-                className="border px-2 py-1 rounded text-gray-600 hover:text-black"
+                className="border px-3 py-2 rounded text-black hover:bg-gray-100"
                 onClick={() => {
                   const [time, meridiem] = pickupTime.split(" ");
                   let [hour, minute] = time.split(":");
@@ -281,7 +281,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 }}
               >+</button>
               <button
-                className={`ml-3 border px-3 py-1 rounded ${pickupTime.endsWith("AM") ? "bg-black text-white" : "text-gray-600"}`}
+                className={`ml-3 border px-4 py-2 rounded ${pickupTime.endsWith("AM") ? "bg-black text-white" : "text-black"}`}
                 onClick={() => {
                   if (!pickupTime.endsWith("AM")) {
                     const newTime = pickupTime.replace(/PM$/, "AM");
@@ -291,7 +291,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 }}
               >AM</button>
               <button
-                className={`border px-3 py-1 rounded ${pickupTime.endsWith("PM") ? "bg-black text-white" : "text-gray-600"}`}
+                className={`border px-4 py-2 rounded ${pickupTime.endsWith("PM") ? "bg-black text-white" : "text-black"}`}
                 onClick={() => {
                   if (!pickupTime.endsWith("PM")) {
                     const newTime = pickupTime.replace(/AM$/, "PM");
@@ -303,14 +303,14 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             </div>
           </div>
           {!singleMode && (
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex justify-between items-center mt-6">
               <div>
-                <p className="text-sm text-gray-500 font-medium">Return Date & Time</p>
-                <h4 className="font-semibold text-gray-800">{secondDate ? formatDisplay(secondDate, returnTime) : selectingReturn ? "Select return" : "Return"}</h4>
+                <p className="text-base text-black font-semibold">Return Date & Time</p>
+                <h4 className="font-semibold text-black text-lg mt-1">{secondDate ? formatDisplay(secondDate, returnTime) : selectingReturn ? "Select return" : "Return"}</h4>
               </div>
               <div className="flex items-center space-x-2">
                 <button
-                  className="border px-2 py-1 rounded text-gray-600 hover:text-black"
+                  className="border px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
                     const [time, meridiem] = returnTime.split(" ");
                     let [hour, minute] = time.split(":");
@@ -320,9 +320,9 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                     if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
                   }}
                 >–</button>
-                <span className="font-semibold">{returnTime.split(" ")[0]}</span>
+                <span className="font-semibold text-black">{returnTime.split(" ")[0]}</span>
                 <button
-                  className="border px-2 py-1 rounded text-gray-600 hover:text-black"
+                  className="border px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
                     const [time, meridiem] = returnTime.split(" ");
                     let [hour, minute] = time.split(":");
@@ -333,7 +333,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   }}
                 >+</button>
                 <button
-                  className={`ml-3 border px-3 py-1 rounded ${returnTime.endsWith("AM") ? "bg-black text-white" : "text-gray-600"}`}
+                  className={`ml-3 border px-4 py-2 rounded ${returnTime.endsWith("AM") ? "bg-black text-white" : "text-black"}`}
                   onClick={() => {
                     if (!returnTime.endsWith("AM")) {
                       const newTime = returnTime.replace(/PM$/, "AM");
@@ -343,7 +343,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                   }}
                 >AM</button>
                 <button
-                  className={`border px-3 py-1 rounded ${returnTime.endsWith("PM") ? "bg-black text-white" : "text-gray-600"}`}
+                  className={`border px-4 py-2 rounded ${returnTime.endsWith("PM") ? "bg-black text-white" : "text-black"}`}
                   onClick={() => {
                     if (!returnTime.endsWith("PM")) {
                       const newTime = returnTime.replace(/AM$/, "PM");
