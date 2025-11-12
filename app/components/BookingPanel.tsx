@@ -5,6 +5,7 @@ import LocationPicker from "./LocationPicker";
 import PromoCodeDialog from "./PromoCodeDialog";
 import DeliveryDialog from "./DeliveryDialog";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useBooking } from "./BookingContext";
 import { MapPin, Calendar, Truck, Ticket, ArrowLeft, ChevronRight } from "lucide-react";
 
@@ -24,6 +25,7 @@ interface BookingPanelProps {
 }
 
 export default function BookingPanel({ tabKey, data, onChange }: BookingPanelProps) {
+    const router = useRouter();
     const { dataByTab } = useBooking();
     const { pickupLocation, returnLocation, sameReturn, pickupDateTime, returnDateTime } = data;
     const showReturnLocation = tabKey !== "monthly";
@@ -51,8 +53,11 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
             className="flex flex-col gap-1"
             onSubmit={e => {
                 e.preventDefault();
-                // Log all booking data across tabs
-                console.log("ALL_BOOKING_DATA", JSON.parse(JSON.stringify(dataByTab)));
+                // Optional: persist to sessionStorage if you want refresh resilience
+                try {
+                    sessionStorage.setItem('LAST_BOOKING_DATA', JSON.stringify(dataByTab));
+                } catch {}
+                router.push('/results');
             }}
         >
             {/* Removed global top bar; checkbox now lives contextually */}
@@ -258,7 +263,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         Show cars
                     </button>
                     {/* Mobile promo code block after button */}
-                    <div className="md:hidden text-xs">
+                    <div className="md:hidden text-xs flex items-center justify-center w-full">
                         {data.promoCode ? (
                             <div className="flex items-center gap-2">
                                 <button
