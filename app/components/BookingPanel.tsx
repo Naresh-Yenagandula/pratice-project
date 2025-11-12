@@ -57,7 +57,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
         >
             {/* Removed global top bar; checkbox now lives contextually */}
             {/* Header row removed checkbox per new placement requirement */}
-            <div className="hidden md:grid grid-cols-5 gap-5 items-end text-xs md:text-sm xl:text-sm 2xl:text-base">
+            <div className="hidden md:grid grid-cols-5 gap-5 items-end text-xs md:text-sm lg:text-xs xl:text-sm 2xl:text-base">
                 <div className={sameReturn && showReturnLocation ? 'font-medium text-black col-span-2' : 'font-medium text-black'}>Pickup {showReturnLocation ? "& Return": null} Location</div>
                 {showReturnLocation && !sameReturn && <div className="font-medium text-black"></div>}
                 <div className="font-medium text-black">Pickup Date & Time</div>
@@ -75,7 +75,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
-                                    className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                    className="h-3 w-3 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                 <span className="font-bold">Same Return Location</span>
                             </label>
@@ -89,7 +89,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
-                                    className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                    className="h-4 w-4 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                     <span className="font-bold">Same Return Location</span>
                             </label>
@@ -109,7 +109,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             aria-haspopup="dialog"
                             aria-expanded={openField === "pickup"}
                             placeholder="Airport, City or Address"
-                            className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                            className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-base lg:text-sm xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs lg:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
                     <div className="mt-2 md:mt-3 flex flex-wrap gap-3 md:gap-5 text-xs md:text-sm font-medium items-center">
@@ -132,7 +132,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
-                                    className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                    className="h-3 w-3 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                 <span className="font-bold">Same Return Location</span>
                             </label>
@@ -144,7 +144,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
-                                    className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                    className="h-4 w-4 rounded border-gray-300 accent-red-600 checked:bg-red-600 checked:border-red-600 focus:ring-red-500"
                                 />
                                     <span className="font-bold">Same Return Location</span>
                             </label>
@@ -163,7 +163,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 aria-haspopup="dialog"
                                 aria-expanded={openField === "returnLoc"}
                                 placeholder="Airport, City or Address"
-                                className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                                className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-base lg:text-sm xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs lg:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
                         <div className="mt-3 flex flex-wrap gap-6 text-sm font-medium items-center">
@@ -193,7 +193,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             onClick={() => setOpenDateField("pickup")}
                             onFocus={() => setOpenDateField("pickup")}
                             placeholder="12 Nov 2025 | 09:00 AM"
-                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-base lg:text-sm xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs lg:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
                     <div className="mt-2 text-xs hidden md:block">
@@ -245,7 +245,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 onClick={() => setOpenDateField("return")}
                                 onFocus={() => setOpenDateField("return")}
                                 placeholder="13 Nov 2025 | 09:00 AM"
-                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-base lg:text-sm xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs lg:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
                     </div>
@@ -253,7 +253,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 <div className="flex flex-col gap-2">
                     <button
                         type="submit"
-                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-4 md:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-sm xl:text-sm 2xl:text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-4 md:px-5 lg:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-sm lg:text-xs xl:text-sm 2xl:text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                         Show cars
                     </button>

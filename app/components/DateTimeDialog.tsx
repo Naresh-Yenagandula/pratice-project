@@ -135,25 +135,25 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
       role="dialog"
       aria-label="Date time selection"
       aria-modal="true"
-      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-base overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
+      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-base md:text-base lg:text-sm overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
       style={{ maxWidth: "80vw" }}
     >
       <div ref={dialogRef} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl grid md:grid-cols-2 overflow-hidden h-full md:h-auto">
         {/* Mobile header */}
         <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200">
-          <h2 className="text-base font-semibold text-black">Select Date & Time</h2>
+          <h2 className="text-base text-black">Select Date & Time</h2>
           <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
         </div>
         {/* LEFT SIDE summary */}
-        <div className="bg-gray-50 p-5 md:p-7 border-r overflow-y-auto">
+        <div className="bg-gray-50 p-5 md:p-7 lg:p-6 border-r overflow-y-auto">
           <div className="flex flex-col space-y-8">
             <div>
               <div className="flex items-center space-x-2">
                 <Plane size={20} className="text-black" />
-                <h3 className="font-semibold text-xl text-black">{pickupLocation || "Pickup Location"}</h3>
+                <h3 className="font-medium text-xl lg:text-lg text-black">{pickupLocation || "Pickup Location"}</h3>
               </div>
-              <p className="text-base text-black mt-2 font-medium">
-                <span className="font-medium">Pickup:</span> {firstDate ? formatDisplay(firstDate, pickupTime) : pickupDateTime || "Select"}
+              <p className="text-lg lg:text-base text-black mt-2 font-bold">
+                <span className="font-bold text-gray-500">Pickup:</span> {firstDate ? formatDisplay(firstDate, pickupTime) : pickupDateTime || "Select"}
               </p>
             </div>
             {!singleMode && (
@@ -162,10 +162,10 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                 <div>
                   <div className="flex items-center space-x-2">
                     <Plane size={20} className="text-black" />
-                    <h3 className="font-semibold text-xl text-black">{returnLocation || "Return Location"}</h3>
+                    <h3 className="font-medium text-xl lg:text-lg text-black">{returnLocation || "Return Location"}</h3>
                   </div>
-                  <p className="text-base text-black mt-2 font-medium">
-                    <span className="font-medium">Return:</span> {secondDate ? formatDisplay(secondDate, returnTime) : returnDateTime || (selectingReturn ? "Select" : "")}
+                  <p className="text-lg lg:text-base text-black mt-2 font-bold">
+                    <span className="font-bold text-gray-500">Return:</span> {secondDate ? formatDisplay(secondDate, returnTime) : returnDateTime || (selectingReturn ? "Select" : "")}
                   </p>
                 </div>
               </>
@@ -188,15 +188,21 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
             <div className="grid grid-cols-2 gap-4 flex-1">
               {/* Month A */}
               <div>
-                <h4 className="text-center font-semibold mb-3 text-black text-lg">{formatMonthLabel(monthA[0])}</h4>
-                <div className="grid grid-cols-7 text-sm text-black mb-2 font-medium">
+                <h4 className="text-center font-semibold mb-6 text-black text-lg lg:text-base">{formatMonthLabel(monthA[0])}</h4>
+                <div className="grid grid-cols-7 text-sm lg:text-xs text-black mb-2 font-medium">
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(d => <div key={d} className="text-center">{d}</div>)}
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-base">
+                <div className="grid grid-cols-7 gap-1 text-base lg:text-sm">
                   {monthA.map(d => {
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
                     const range = inRange(d);
+                    const baseClasses = "py-2 rounded-md transition-colors";
+                    const stateClasses = start || end
+                      ? "bg-black text-white"
+                      : range
+                        ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
+                        : "text-black hover:bg-red-50 hover:text-red-600";
                     return (
                       <button
                         key={d.getTime()}
@@ -204,7 +210,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
-                        className={`py-2 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-black" : "hover:bg-gray-100"}`}
+                        className={`${baseClasses} ${stateClasses}`}
                       >
                         {d.getDate()}
                       </button>
@@ -214,15 +220,21 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
               </div>
               {/* Month B */}
               <div>
-                <h4 className="text-center font-semibold mb-3 text-black text-lg">{formatMonthLabel(monthB[0])}</h4>
-                <div className="grid grid-cols-7 text-sm text-black mb-2 font-medium">
+                <h4 className="text-center font-semibold mb-6 text-black text-lg lg:text-base">{formatMonthLabel(monthB[0])}</h4>
+                <div className="grid grid-cols-7 text-sm lg:text-xs text-black mb-2 font-medium">
                   {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map(d => <div key={d} className="text-center">{d}</div>)}
                 </div>
-                <div className="grid grid-cols-7 gap-1 text-base">
+                <div className="grid grid-cols-7 gap-1 text-base lg:text-sm">
                   {monthB.map(d => {
                     const start = firstDate && d.getTime() === firstDate.getTime();
                     const end = secondDate && d.getTime() === secondDate.getTime();
                     const range = inRange(d);
+                    const baseClasses = "py-2 rounded-md transition-colors";
+                    const stateClasses = start || end
+                      ? "bg-black text-white"
+                      : range
+                        ? "bg-red-900/10 text-black hover:bg-red-50 hover:text-red-600"
+                        : "text-black hover:bg-red-50 hover:text-red-600";
                     return (
                       <button
                         key={d.getTime()}
@@ -230,7 +242,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
                         onClick={() => handleDayClick(d)}
                         onMouseEnter={() => handleDayMouseEnter(d)}
                         onMouseLeave={handleDayMouseLeave}
-                        className={`py-2 rounded-md transition-colors ${start || end ? "bg-black text-white" : range ? "bg-gray-900/10 text-black" : "hover:bg-gray-100"}`}
+                        className={`${baseClasses} ${stateClasses}`}
                       >
                         {d.getDate()}
                       </button>
@@ -249,112 +261,109 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
               <ChevronRight size={18} />
             </button>
           </div>
-          {/* Time Controls */}
-          <div className={`flex ${singleMode ? 'justify-start' : 'justify-between'} items-center border-t pt-5 mt-8`}>
+          {/* Side-by-side date/time sections with time controls below each */}
+          <div className={`mt-8 border-t pt-5 grid ${singleMode ? 'grid-cols-1' : 'grid-cols-2'} gap-8`}>
             <div>
-              <p className="text-base text-black font-semibold">Pickup Date & Time</p>
-              <h4 className="font-semibold text-black text-lg mt-1">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button
-                className="border px-3 py-2 rounded text-black hover:bg-gray-100"
-                onClick={() => {
-                  // naive decrement: replace hour number
-                  const [time, meridiem] = pickupTime.split(" ");
-                  let [hour, minute] = time.split(":");
-                  let h = parseInt(hour, 10) - 1; if (h < 1) h = 12;
-                  const newTime = `${h}:${minute} ${meridiem}`;
-                  setPickupTime(newTime);
-                  if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
-                }}
-              >–</button>
-              <span className="font-semibold text-black">{pickupTime.split(" ")[0]}</span>
-              <button
-                className="border px-3 py-2 rounded text-black hover:bg-gray-100"
-                onClick={() => {
-                  const [time, meridiem] = pickupTime.split(" ");
-                  let [hour, minute] = time.split(":");
-                  let h = parseInt(hour, 10) + 1; if (h > 12) h = 1;
-                  const newTime = `${h}:${minute} ${meridiem}`;
-                  setPickupTime(newTime);
-                  if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
-                }}
-              >+</button>
-              <button
-                className={`ml-3 border px-4 py-2 rounded ${pickupTime.endsWith("AM") ? "bg-black text-white" : "text-black"}`}
-                onClick={() => {
-                  if (!pickupTime.endsWith("AM")) {
-                    const newTime = pickupTime.replace(/PM$/, "AM");
-                    setPickupTime(newTime);
-                    if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
-                  }
-                }}
-              >AM</button>
-              <button
-                className={`border px-4 py-2 rounded ${pickupTime.endsWith("PM") ? "bg-black text-white" : "text-black"}`}
-                onClick={() => {
-                  if (!pickupTime.endsWith("PM")) {
-                    const newTime = pickupTime.replace(/AM$/, "PM");
-                    setPickupTime(newTime);
-                    if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
-                  }
-                }}
-              >PM</button>
-            </div>
-          </div>
-          {!singleMode && (
-            <div className="flex justify-between items-center mt-6">
-              <div>
-                <p className="text-base text-black font-semibold">Return Date & Time</p>
-                <h4 className="font-semibold text-black text-lg mt-1">{secondDate ? formatDisplay(secondDate, returnTime) : selectingReturn ? "Select return" : "Return"}</h4>
-              </div>
-              <div className="flex items-center space-x-2">
+              <p className="text-base lg:text-sm text-black font-semibold mb-1">Pickup Date & Time</p>
+              <h4 className="font-semibold text-black text-lg lg:text-base">{firstDate ? formatDisplay(firstDate, pickupTime) : "Select date"}</h4>
+              <div className="flex items-center space-x-2 mt-3">
                 <button
-                  className="border px-3 py-2 rounded text-black hover:bg-gray-100"
+                  className="px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
-                    const [time, meridiem] = returnTime.split(" ");
-                    let [hour, minute] = time.split(":");
+                    const [time, meridiem] = pickupTime.split(' ');
+                    let [hour, minute] = time.split(':');
                     let h = parseInt(hour, 10) - 1; if (h < 1) h = 12;
                     const newTime = `${h}:${minute} ${meridiem}`;
-                    setReturnTime(newTime);
-                    if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    setPickupTime(newTime);
+                    if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
                   }}
                 >–</button>
-                <span className="font-semibold text-black">{returnTime.split(" ")[0]}</span>
+                <span className="font-semibold text-black">{pickupTime.split(' ')[0]}</span>
                 <button
-                  className="border px-3 py-2 rounded text-black hover:bg-gray-100"
+                  className="px-3 py-2 rounded text-black hover:bg-gray-100"
                   onClick={() => {
-                    const [time, meridiem] = returnTime.split(" ");
-                    let [hour, minute] = time.split(":");
+                    const [time, meridiem] = pickupTime.split(' ');
+                    let [hour, minute] = time.split(':');
                     let h = parseInt(hour, 10) + 1; if (h > 12) h = 1;
                     const newTime = `${h}:${minute} ${meridiem}`;
-                    setReturnTime(newTime);
-                    if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    setPickupTime(newTime);
+                    if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
                   }}
                 >+</button>
                 <button
-                  className={`ml-3 border px-4 py-2 rounded ${returnTime.endsWith("AM") ? "bg-black text-white" : "text-black"}`}
+                  className={`ml-3 px-4 py-2 rounded ${pickupTime.endsWith('AM') ? 'bg-black text-white' : 'text-black'}`}
                   onClick={() => {
-                    if (!returnTime.endsWith("AM")) {
-                      const newTime = returnTime.replace(/PM$/, "AM");
-                      setReturnTime(newTime);
-                      if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    if (!pickupTime.endsWith('AM')) {
+                      const newTime = pickupTime.replace(/PM$/, 'AM');
+                      setPickupTime(newTime);
+                      if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
                     }
                   }}
                 >AM</button>
                 <button
-                  className={`border px-4 py-2 rounded ${returnTime.endsWith("PM") ? "bg-black text-white" : "text-black"}`}
+                  className={`px-4 py-2 rounded ${pickupTime.endsWith('PM') ? 'bg-black text-white' : 'text-black'}`}
                   onClick={() => {
-                    if (!returnTime.endsWith("PM")) {
-                      const newTime = returnTime.replace(/AM$/, "PM");
-                      setReturnTime(newTime);
-                      if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    if (!pickupTime.endsWith('PM')) {
+                      const newTime = pickupTime.replace(/AM$/, 'PM');
+                      setPickupTime(newTime);
+                      if (firstDate) onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
                     }
                   }}
                 >PM</button>
               </div>
             </div>
-          )}
+            {!singleMode && (
+              <div>
+                <p className="text-base lg:text-sm text-black font-semibold mb-1">Return Date & Time</p>
+                <h4 className="font-semibold text-black text-lg lg:text-base">{secondDate ? formatDisplay(secondDate, returnTime) : selectingReturn ? 'Select return' : 'Return'}</h4>
+                <div className="flex items-center space-x-2 mt-3">
+                  <button
+                    className="px-3 py-2 rounded text-black hover:bg-gray-100"
+                    onClick={() => {
+                      const [time, meridiem] = returnTime.split(' ');
+                      let [hour, minute] = time.split(':');
+                      let h = parseInt(hour, 10) - 1; if (h < 1) h = 12;
+                      const newTime = `${h}:${minute} ${meridiem}`;
+                      setReturnTime(newTime);
+                      if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    }}
+                  >–</button>
+                  <span className="font-semibold text-black">{returnTime.split(' ')[0]}</span>
+                  <button
+                    className="px-3 py-2 rounded text-black hover:bg-gray-100"
+                    onClick={() => {
+                      const [time, meridiem] = returnTime.split(' ');
+                      let [hour, minute] = time.split(':');
+                      let h = parseInt(hour, 10) + 1; if (h > 12) h = 1;
+                      const newTime = `${h}:${minute} ${meridiem}`;
+                      setReturnTime(newTime);
+                      if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                    }}
+                  >+</button>
+                  <button
+                    className={`ml-3 px-4 py-2 rounded ${returnTime.endsWith('AM') ? 'bg-black text-white' : 'text-black'}`}
+                    onClick={() => {
+                      if (!returnTime.endsWith('AM')) {
+                        const newTime = returnTime.replace(/PM$/, 'AM');
+                        setReturnTime(newTime);
+                        if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                      }
+                    }}
+                  >AM</button>
+                  <button
+                    className={`px-4 py-2 rounded ${returnTime.endsWith('PM') ? 'bg-black text-white' : 'text-black'}`}
+                    onClick={() => {
+                      if (!returnTime.endsWith('PM')) {
+                        const newTime = returnTime.replace(/AM$/, 'PM');
+                        setReturnTime(newTime);
+                        if (secondDate) onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+                      }
+                    }}
+                  >PM</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         {/* Desktop close button */}
         <div className="hidden md:block absolute top-4 right-4">
