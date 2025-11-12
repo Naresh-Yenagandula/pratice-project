@@ -6,7 +6,7 @@ import PromoCodeDialog from "./PromoCodeDialog";
 import DeliveryDialog from "./DeliveryDialog";
 import { useState } from "react";
 import { useBooking } from "./BookingContext";
-import { MapPin, Calendar, Truck, Ticket, ArrowLeft } from "lucide-react";
+import { MapPin, Calendar, Truck, Ticket, ArrowLeft, ChevronRight } from "lucide-react";
 
 export interface BookingData {
     pickupLocation: string;
@@ -55,55 +55,56 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 console.log("ALL_BOOKING_DATA", JSON.parse(JSON.stringify(dataByTab)));
             }}
         >
-            {/* Header row (hidden on small screens) */}
-            <div className="hidden md:grid grid-cols-12 gap-3 items-end">
-                <div className={(sameReturn || !showReturnLocation ? "col-span-4" : "col-span-2") + " text-base font-medium text-black"}>
-                    Pickup Location
-                </div>
+            {/* Removed global top bar; checkbox now lives contextually */}
+            {/* Header row removed checkbox per new placement requirement */}
+            <div className="hidden md:grid grid-cols-12 gap-3 items-end text-lg">
+                <div className={(sameReturn || !showReturnLocation ? "col-span-4" : "col-span-2") + " text-lg font-medium text-black"}>Pickup {showReturnLocation? "& Return":""} Location </div>
                 {showReturnLocation && !sameReturn && (
-                    <div className="col-span-3 text-base font-medium text-black"></div>
+                    <div className="col-span-2 text-lg font-medium text-black"></div>
                 )}
-                <div className={"col-span-2 text-base font-medium text-black"}>Pickup Date & Time</div>
+                <div className="col-span-2 text-lg font-medium text-black">Pickup Date & Time</div>
                 {showReturnLocation ? (
-                    <div className="col-span-2 text-base font-medium text-black">Return Date & Time</div>
+                    <div className="col-span-2 text-lg font-medium text-black">Return Date & Time</div>
                 ) : (
                     <div className="col-span-2" />
                 )}
-                <div className="col-span-2 flex justify-end">
-                    {showReturnLocation && (
-                        <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none">
-                            <input
-                                type="checkbox"
-                                checked={sameReturn}
-                                onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
-                                className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
-                            />
-                            Same Return Location
-                        </label>
-                    )}
-                </div>
+                <div className="col-span-2" />
             </div>
             {/* Inputs row */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-                <div className={(sameReturn || !showReturnLocation ? "md:col-span-4" : "md:col-span-2") + ""}>
-                    {/* Mobile label */}
-                    <div className="md:hidden text-base font-medium text-black mb-1 flex justify-between items-center">
+                <div className={(sameReturn || !showReturnLocation ? "md:col-span-4" : "md:col-span-2") + " relative"}>
+                    {/* Mobile label with conditional checkbox when sameReturn true */}
+                    <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
                         <span>Pickup Location</span>
-                        {showReturnLocation && (
-                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none">
+                        {showReturnLocation && sameReturn && (
+                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none font-bold">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                Same Return
+                                <span className="font-bold">Same Return Location</span>
                             </label>
                         )}
                     </div>
+                    {/* Desktop top-right checkbox when sameReturn true */}
+                    {showReturnLocation && sameReturn && (
+                        <div className="hidden md:block absolute -top-7 right-0">
+                            <label className="flex items-center gap-2 text-sm text-black cursor-pointer select-none text-lg">
+                                <input
+                                    type="checkbox"
+                                    checked={sameReturn}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                />
+                                <span className="font-bold">Same Return Location</span>
+                            </label>
+                        </div>
+                    )}
                     <div className="relative">
                         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
-                            <MapPin size={16} />
+                            <MapPin size={20} />
                         </span>
                         <input
                             id={`pickup-${tabKey}`}
@@ -115,25 +116,49 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             aria-haspopup="dialog"
                             aria-expanded={openField === "pickup"}
                             placeholder="Airport, City or Address"
-                            className="w-full rounded-md border border-gray-300 pl-9 pr-3 py-3 text-base font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 text-black"
+                            className="w-full rounded-md border border-gray-300 pl-11 pr-4 py-3 text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
-                    <div className="mt-2 flex flex-wrap gap-6 text-xs font-medium items-center">
+                    <div className="mt-3 flex flex-wrap gap-6 text-sm font-medium items-center">
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("pickup"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-1 text-black hover:text-red-600 text-base"
+                            className="flex items-center gap-2 text-black text-lg font-bold"
                         >
-                            <Truck size={16} /> Deliver to me ▸
+                            <Truck size={16} /> <span className="font-bold">Deliver to me</span> <ChevronRight size={16} />
                         </button>
                     </div>
                 </div>
                 {showReturnLocation && !sameReturn && (
-                    <div className="md:col-span-2">
-                        <div className="md:hidden text-base font-medium text-black mb-1">Return Location</div>
+                    <div className="md:col-span-2 relative">
+                        {/* Mobile label with checkbox when not sameReturn */}
+                        <div className="md:hidden text-lg font-medium text-black mb-2 flex justify-between items-center">
+                            <span>Return Location</span>
+                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none">
+                                <input
+                                    type="checkbox"
+                                    checked={sameReturn}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                />
+                                <span className="font-bold">Same Return Location</span>
+                            </label>
+                        </div>
+                        {/* Desktop top-right checkbox when not sameReturn */}
+                        <div className="hidden md:block absolute -top-7 right-0">
+                            <label className="flex items-center gap-2 text-sm text-black cursor-pointer select-none text-lg">
+                                <input
+                                    type="checkbox"
+                                    checked={sameReturn}
+                                    onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
+                                    className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                                />
+                                <span className="font-bold">Same Return Location</span>
+                            </label>
+                        </div>
                         <div className="relative">
                             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
-                                <MapPin size={16} />
+                                <MapPin size={20} />
                             </span>
                             <input
                                 id={`return-${tabKey}`}
@@ -145,25 +170,25 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 aria-haspopup="dialog"
                                 aria-expanded={openField === "returnLoc"}
                                 placeholder="Airport, City or Address"
-                                className="w-full rounded-md border border-gray-300 pl-9 pr-3 py-3 text-base font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 text-black"
+                                className="w-full rounded-md border border-gray-300 pl-11 pr-4 py-3 text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
-                        <div className="mt-2 flex flex-wrap gap-6 text-xs font-medium items-center">
+                        <div className="mt-3 flex flex-wrap gap-6 text-sm font-medium items-center">
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("returnLoc"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-1 text-black hover:text-red-600 text-base"
+                            className="flex items-center gap-2 text-black text-lg font-bold"
                         >
-                            <Truck size={16} /> Collect from me ▸
+                            <Truck size={16} /> <span className="font-bold">Collect from me</span> <ChevronRight size={16} /> 
                         </button>
                     </div>
                     </div>
                 )}
                 <div className="md:col-span-2">
-                    <div className="md:hidden text-base font-medium text-black mb-1">Pickup Date & Time</div>
+                    <div className="md:hidden text-lg font-medium text-black mb-2">Pickup Date & Time</div>
                     <div className="relative">
                         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
-                            <Calendar size={16} />
+                            <Calendar size={20} />
                         </span>
                         <input
                             id={`pickup-dt-${tabKey}`}
@@ -175,7 +200,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             onClick={() => setOpenDateField("pickup")}
                             onFocus={() => setOpenDateField("pickup")}
                             placeholder="12 Nov 2025 | 09:00 AM"
-                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-9 pr-3 py-3 text-base font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 text-black"
+                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-11 pr-4 py-3 text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
                     <div className="mt-2 text-xs">
@@ -184,7 +209,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                  <button
                                 type="button"
                                 onClick={() => setPromoOpen(true)}
-                                className="flex items-center gap-1 font-medium text-black hover:text-red-600 text-base"
+                                className="flex items-center gap-2 font-medium text-black hover:text-red-600 text-lg"
                             >
                                 {data.promoCode}
                             </button>
@@ -199,19 +224,19 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             <button
                                 type="button"
                                 onClick={() => setPromoOpen(true)}
-                                className="flex items-center gap-1 font-medium text-black hover:text-red-600 text-base"
+                                className="flex items-center gap-2 font-medium text-black hover:text-red-600 text-lg"
                             >
-                                <Ticket size={16} /> Promo Code / Shukran Id
+                                <Ticket size={16} /> <span className="font-bold underline">Promo Code / Shukran Id</span>
                             </button>
                         )}
                     </div>
                 </div>
                 {showReturnLocation && (
                     <div className="md:col-span-2">
-                        <div className="md:hidden text-base font-medium text-black mb-1">Return Date & Time</div>
+                        <div className="md:hidden text-lg font-medium text-black mb-2">Return Date & Time</div>
                         <div className="relative">
                             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-black">
-                                <Calendar size={16} />
+                                <Calendar size={20} />
                             </span>
                             <input
                                 id={`return-dt-${tabKey}`}
@@ -223,7 +248,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 onClick={() => setOpenDateField("return")}
                                 onFocus={() => setOpenDateField("return")}
                                 placeholder="13 Nov 2025 | 09:00 AM"
-                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-9 pr-3 py-3 text-base font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 text-black"
+                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-11 pr-4 py-3 text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
                     </div>
@@ -231,7 +256,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 <div className="md:col-span-1 flex">
                     <button
                         type="submit"
-                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-6 py-2 text-sm font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-7 py-3 text-base font-medium hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                         Show cars
                     </button>
