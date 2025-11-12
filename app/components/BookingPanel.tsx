@@ -70,28 +70,28 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                     <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
                         <span>Pickup Location</span>
                         {showReturnLocation && sameReturn && (
-                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none font-bold pb-2">
+                            <label className="flex items-center gap-1 text-black cursor-pointer select-none font-bold pb-2 text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold text-lg">Same Return Location</span>
+                                <span className="font-bold">Same Return Location</span>
                             </label>
                         )}
                     </div>
                     {/* Desktop top-right checkbox when sameReturn true */}
                     {showReturnLocation && sameReturn && (
                         <div className="hidden md:block absolute -top-7 right-0">
-                            <label className="flex items-center gap-2 text-sm text-black cursor-pointer select-none text-lg">
+                            <label className="flex items-center gap-2 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                    <span className="font-bold text-lg">Same Return Location</span>
+                                    <span className="font-bold">Same Return Location</span>
                             </label>
                         </div>
                     )}
@@ -109,14 +109,14 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             aria-haspopup="dialog"
                             aria-expanded={openField === "pickup"}
                             placeholder="Airport, City or Address"
-                            className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-sm md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-xs md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                            className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
                     <div className="mt-2 md:mt-3 flex flex-wrap gap-3 md:gap-5 text-xs md:text-sm font-medium items-center">
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("pickup"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-2 text-black text-xs md:text-sm xl:text-sm 2xl:text-base font-bold"
+                            className="flex items-center gap-2 text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
                         >
                             <Truck size={16} /> <span className="font-bold">Deliver to me</span> <ChevronRight size={16} />
                         </button>
@@ -127,26 +127,26 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                         {/* Mobile label with checkbox when not sameReturn */}
                         <div className="md:hidden text-xs md:text-sm font-medium text-black mb-1 flex justify-between items-center">
                             <span>Return Location</span>
-                            <label className="flex items-center gap-1 text-sm text-black cursor-pointer select-none">
+                            <label className="flex items-center gap-1 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                <span className="font-bold text-lg">Same Return Location</span>
+                                <span className="font-bold">Same Return Location</span>
                             </label>
                         </div>
                         {/* Desktop top-right checkbox when not sameReturn */}
                         <div className="hidden md:block absolute -top-7 right-0">
-                            <label className="flex items-center gap-2 text-sm text-black cursor-pointer select-none text-lg">
+                            <label className="flex items-center gap-2 text-black cursor-pointer select-none font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg">
                                 <input
                                     type="checkbox"
                                     checked={sameReturn}
                                     onChange={e => onChange(e.target.checked ? { sameReturn: true, returnLocation: pickupLocation } : { sameReturn: false })}
                                     className="h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
                                 />
-                                    <span className="font-bold text-lg">Same Return Location</span>
+                                    <span className="font-bold">Same Return Location</span>
                             </label>
                         </div>
                         <div className="relative">
@@ -163,14 +163,14 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 aria-haspopup="dialog"
                                 aria-expanded={openField === "returnLoc"}
                                 placeholder="Airport, City or Address"
-                                className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-sm md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-xs md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                                className="w-full rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
                         <div className="mt-3 flex flex-wrap gap-6 text-sm font-medium items-center">
                         <button
                             type="button"
                             onClick={() => { setDeliveryTarget("returnLoc"); setDeliveryOpen(true); }}
-                            className="flex items-center gap-2 text-black text-lg font-bold"
+                            className="flex items-center gap-2 text-black font-bold text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
                         >
                             <Truck size={16} /> <span className="font-bold">Collect from me</span> <ChevronRight size={16} /> 
                         </button>
@@ -193,7 +193,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             onClick={() => setOpenDateField("pickup")}
                             onFocus={() => setOpenDateField("pickup")}
                             placeholder="12 Nov 2025 | 09:00 AM"
-                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-sm md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-xs md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                            className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                         />
                     </div>
                     <div className="mt-2 text-xs">
@@ -221,7 +221,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                             <button
                                 type="button"
                                 onClick={() => setPromoOpen(true)}
-                                className="flex items-center gap-2 font-medium text-black text-xs md:text-sm xl:text-base"
+                                className="flex items-center gap-2 font-bold text-black text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-lg"
                             >
                                 <Ticket size={16} /> <span className="font-bold underline">Promo Code / Shukran Id</span>
                             </button>
@@ -245,7 +245,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                                 onClick={() => setOpenDateField("return")}
                                 onFocus={() => setOpenDateField("return")}
                                 placeholder="13 Nov 2025 | 09:00 AM"
-                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-sm md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-xs md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
+                                className="w-full cursor-pointer rounded-md border border-gray-300 pl-10 pr-4 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-base xl:text-base 2xl:text-lg font-bold focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400 placeholder:text-sm md:placeholder:text-xs xl:placeholder:text-sm placeholder:font-bold text-black"
                             />
                         </div>
                     </div>
@@ -253,7 +253,7 @@ export default function BookingPanel({ tabKey, data, onChange }: BookingPanelPro
                 <div className="flex">
                     <button
                         type="submit"
-                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-4 md:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 xl:py-2 2xl:py-3 text-xs md:text-sm xl:text-sm 2xl:text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                        className="w-full whitespace-nowrap bg-red-600 text-white rounded-md px-4 md:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 xl:py-2 2xl:py-3 text-base md:text-sm xl:text-sm 2xl:text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                     >
                         Show cars
                     </button>
