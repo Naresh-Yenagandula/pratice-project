@@ -135,7 +135,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
       role="dialog"
       aria-label="Date time selection"
       aria-modal="true"
-  className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-base overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
+      className="z-50 w-screen rounded-none border-0 bg-white shadow-none text-base overflow-hidden px-0 md:px-8 py-0 md:py-4 fixed inset-0 md:static h-screen md:h-auto"
       style={{ maxWidth: "80vw" }}
     >
       <div ref={dialogRef} className="w-full mx-auto bg-white rounded-none md:rounded-2xl shadow-xl grid md:grid-cols-2 overflow-hidden h-full md:h-auto">
@@ -145,7 +145,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
           <button onClick={onClose} aria-label="Close" className="p-1 text-gray-600 hover:text-black"><X size={20} /></button>
         </div>
         {/* LEFT SIDE summary */}
-  <div className="bg-gray-50 p-5 md:p-7 border-r overflow-y-auto">
+        <div className="bg-gray-50 p-5 md:p-7 border-r overflow-y-auto">
           <div className="flex flex-col space-y-8">
             <div>
               <div className="flex items-center space-x-2">
@@ -173,7 +173,7 @@ export default function DateTimeDialog({ open, pickupDateTime, returnDateTime, p
           </div>
         </div>
         {/* RIGHT SIDE calendars & time */}
-  <div className="relative p-5 md:p-10 overflow-y-auto">
+        <div className="relative p-5 md:p-10 overflow-y-auto">
           <div className="flex items-start justify-between gap-6 relative">
             {/* Previous Arrow */}
             <button

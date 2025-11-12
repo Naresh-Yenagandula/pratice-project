@@ -26,7 +26,8 @@ export default function BookingTab() {
                 <div
                     role="tablist"
                     aria-label="Booking options"
-                    className="flex border-b border-gray-200 dark:border-gray-700"
+                    className="flex border-b border-gray-100 p-0 m-0"
+                    style={{ lineHeight: 1 }}
                 >
                     {tabs.map(t => {
                         const isActive = t.key === activeTab;
@@ -40,10 +41,16 @@ export default function BookingTab() {
                                 tabIndex={isActive ? 0 : -1}
                                 onClick={() => setActiveTab(t.key)}
                                 className={`
-                                px-5 py-6 text-2xl border-b-2 
-                                ${isActive ?
-                                        "border-red-600 text-red-600 font-bold" : "border-transparent text-gray-500"
-                                    }`}
+                                    px-5 py-6 text-2xl border-b-2
+                                    ${isActive
+                                        ? "border-red-600 text-red-600 font-bold"
+                                        : "border-transparent text-gray-500"
+                                    }
+                                `}
+                                style={{
+                                    margin: 0,
+                                    borderRadius: 0,
+                                }}
                             >
                                 {t.label}
                             </button>
