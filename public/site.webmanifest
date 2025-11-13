@@ -1,0 +1,23 @@
+{
+  "name": "Car Rental UAE",
+  "short_name": "CarRental",
+  "description": "Book rental cars across the UAE with flexible pickup & return locations, promo codes, and door delivery.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
