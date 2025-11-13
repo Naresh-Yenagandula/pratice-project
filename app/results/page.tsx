@@ -23,21 +23,25 @@ export default function ResultsPage() {
               <dd className="font-bold text-black break-words">{data.pickupLocation || '—'}</dd>
             </div>
             <div>
-              <dt className="font-medium text-gray-500">Return Location</dt>
-              <dd className="font-bold text-black break-words">{data.returnLocation || '—'}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-gray-500">Same Return Location</dt>
-              <dd className="font-bold text-black">{data.sameReturn ? 'Yes' : 'No'}</dd>
-            </div>
-            <div>
               <dt className="font-medium text-gray-500">Pickup Date & Time</dt>
               <dd className="font-bold text-black">{data.pickupDateTime || '—'}</dd>
             </div>
-            <div>
-              <dt className="font-medium text-gray-500">Return Date & Time</dt>
-              <dd className="font-bold text-black">{data.returnDateTime || '—'}</dd>
-            </div>
+            {activeTab !== 'monthly' && (
+              <>
+                <div>
+                  <dt className="font-medium text-gray-500">Return Location</dt>
+                  <dd className="font-bold text-black break-words">{data.returnLocation || '—'}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-gray-500">Same Return Location</dt>
+                  <dd className="font-bold text-black">{data.sameReturn ? 'Yes' : 'No'}</dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-gray-500">Return Date & Time</dt>
+                  <dd className="font-bold text-black">{data.returnDateTime || '—'}</dd>
+                </div>
+              </>
+            )}
             {data.promoCode && (
               <div>
                 <dt className="font-medium text-gray-500">Promo / Shukran</dt>
