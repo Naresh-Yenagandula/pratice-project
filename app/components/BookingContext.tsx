@@ -1,43 +1,60 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
-import { BookingData } from "./BookingPanel";
+import { BookingData } from "../../lib/domain/booking";
+import { BookingContextValue } from "../../lib/types/ui";
 
-interface BookingContextValue {
-  dataByTab: Record<string, BookingData>;
-  activeTab: string;
-  setActiveTab: (k: string) => void;
-  updateTabData: (tab: string, patch: Partial<BookingData>) => void;
-}
+const BookingContext = createContext<BookingContextValue | undefined>(
+  undefined
+);
 
-const BookingContext = createContext<BookingContextValue | undefined>(undefined);
-
-// Build initial data with default pickup today and return tomorrow
 function buildInitial(): Record<string, BookingData> {
   const now = new Date();
-  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const plus3 = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3);
   const fmt = (d: Date, time: string) => {
     const day = d.getDate();
     const monthShort = d.toLocaleString("en", { month: "short" });
     return `${day} ${monthShort} ${d.getFullYear()} | ${time}`;
   };
   const pickup = fmt(now, "9:00 AM");
-  const ret = fmt(tomorrow, "9:00 AM");
+  const ret = fmt(plus3, "9:00 AM");
   return {
-    start: { pickupLocation: "", returnLocation: "", sameReturn: true, pickupDateTime: pickup, returnDateTime: ret, promoCode: "" },
-    monthly: { pickupLocation: "", returnLocation: "", sameReturn: true, pickupDateTime: pickup, returnDateTime: ret, promoCode: "" }
+    start: {
+      pickupLocation: "",
+      returnLocation: "",
+      sameReturn: true,
+      pickupDateTime: pickup,
+      returnDateTime: ret,
+      promoCode: "",
+      pickupMode: "branch",
+      returnMode: "branch",
+    },
+    monthly: {
+      pickupLocation: "",
+      returnLocation: "",
+      sameReturn: true,
+      pickupDateTime: pickup,
+      returnDateTime: ret,
+      promoCode: "",
+      pickupMode: "branch",
+      returnMode: "branch",
+    },
   };
 }
 
 export function BookingProvider({ children }: { children: ReactNode }) {
-  const [dataByTab, setDataByTab] = useState<Record<string, BookingData>>(() => buildInitial());
+  const [dataByTab, setDataByTab] = useState<Record<string, BookingData>>(() =>
+    buildInitial()
+  );
   const [activeTab, setActiveTab] = useState<string>("start");
 
   const updateTabData = (tab: string, patch: Partial<BookingData>) => {
-    setDataByTab(prev => ({ ...prev, [tab]: { ...prev[tab], ...patch } }));
+    setDataByTab((prev) => ({ ...prev, [tab]: { ...prev[tab], ...patch } }));
   };
 
   return (
-    <BookingContext.Provider value={{ dataByTab, activeTab, setActiveTab, updateTabData }}>
+    <BookingContext.Provider
+      value={{ dataByTab, activeTab, setActiveTab, updateTabData }}
+    >
       {children}
     </BookingContext.Provider>
   );

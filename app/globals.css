@@ -24,3 +24,258 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Component utility classes extracted from repeated Tailwind patterns */
+@layer components {
+  .btn-primary {
+    @apply rounded-md bg-red-600 px-4 py-2 text-sm font-bold text-white shadow focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 hover:bg-red-700 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 hover:border-red-400 hover:bg-red-50 disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .badge-offer {
+    @apply inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 border border-red-200;
+  }
+
+  .feature-pill {
+    @apply flex items-center gap-1 rounded-md bg-gray-100 px-2 py-1 text-[11px] font-semibold text-gray-700;
+  }
+
+  /* Fallback regular CSS implementations (no @apply) */
+  .btn-icon {
+    padding: 0.25rem;
+    color: #4b5563;
+    border-radius: 0.375rem;
+    line-height: 1;
+  }
+
+  .btn-icon:hover {
+    color: #000;
+  }
+
+  .btn-icon:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.2);
+    outline-offset: 2px;
+  }
+
+  .input-base {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    background: #fff;
+  }
+
+  .input-base::placeholder {
+    color: #9ca3af;
+    font-weight: 700;
+  }
+
+  .input-base:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+  }
+
+  .input-sm {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #000;
+    background: #fff;
+  }
+
+  .input-sm::placeholder {
+    color: #9ca3af;
+    font-weight: 700;
+  }
+
+  .input-sm:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+  }
+
+  .input-with-icon {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    background: #fff;
+  }
+
+  .input-with-icon::placeholder {
+    color: #9ca3af;
+    font-weight: 700;
+  }
+
+  .input-with-icon:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+    background-color: #ffe5e5;
+  }
+
+  .select-base {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    background: #fff;
+    appearance: none;
+  }
+
+  .select-base:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+  }
+
+  .dialog-full {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  @media (min-width:768px) {
+    .dialog-full {
+      position: static;
+      height: auto;
+      padding: 0 2rem;
+    }
+  }
+
+  .dialog-panel-split {
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    display: grid;
+    overflow: hidden;
+  }
+
+  @media (min-width:768px) {
+    .dialog-panel-split {
+      border-radius: 1rem;
+      height: auto;
+    }
+  }
+
+  .modal-root {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-panel {
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .close-btn {
+    padding: 0.5rem;
+    color: #4b5563;
+    border-radius: 0.375rem;
+  }
+
+  .close-btn:hover {
+    color: #000;
+  }
+
+  /* Responsive booking input: progressively smaller sizes */
+  .booking-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    padding: 0.625rem 0.875rem 0.625rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    background: #fff;
+    line-height: 1.1;
+  }
+
+  .booking-input::placeholder {
+    color: #9ca3af;
+    font-weight: 700;
+  }
+
+  .booking-input:focus {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+    background-color: #ffe5e5;
+  }
+
+  @media (max-width: 768px) {
+    .booking-input {
+      font-size: 0.875rem;
+      padding: 0.75rem 1rem 0.75rem 2.5rem; /* increased height */
+      line-height: 1.25;
+      border: 1px solid #000000; /* ensure border visible on small devices */
+    }
+  }
+
+  @media (max-width: 640px) {
+    .booking-input {
+      font-size: 0.875rem; /* unify with popup search input */
+      padding: 0.8rem 1rem 0.8rem 2.5rem; /* further height increase */
+      line-height: 1.3;
+      border: 1px solid #000000; /* reinforce border visibility */
+    }
+  }
+
+  @media (max-width: 360px) {
+    .booking-input {
+      font-size: 0.875rem; /* keep consistent even on very small */
+      padding: 0.85rem 1.05rem 0.85rem 2.4rem; /* maximum height for smallest screens */
+      line-height: 1.35;
+      border: 1px solid #000000; /* reinforce border visibility */
+    }
+  }
+
+  /* Custom red rounded scrollbar for location lists */
+  .custom-scroll {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #dc2626 #ffe5e5; /* thumb track */
+  }
+  .custom-scroll::-webkit-scrollbar {
+    width: 10px;
+  }
+  .custom-scroll::-webkit-scrollbar-track {
+    background: #ffe5e5;
+    border-radius: 9999px;
+  }
+  .custom-scroll::-webkit-scrollbar-thumb {
+    background: #dc2626;
+    border-radius: 9999px;
+    border: 2px solid #ffe5e5; /* inset look */
+  }
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #b91c1c;
+  }
+}

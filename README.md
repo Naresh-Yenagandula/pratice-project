@@ -29,6 +29,20 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Architecture
+
+- **Domain (`lib/domain`)**: Business models and types, e.g., `BookingData` in `lib/domain/booking.ts`.
+- **Services (`lib/services`)**: Side-effecting orchestration that talks to APIs and composes domain patches, e.g., `lib/services/locations.ts`.
+- **API (`lib/api`)**: Low-level API clients and hooks, free of UI concerns.
+- **Utils (`lib/utils`)**: Pure utility functions like `formatDubaiDateTime` and booking patch helpers.
+- **UI Components (`app/components`)**: Presentational components and thin containers. Components should import domain/services and avoid embedding business rules.
+
+### Guidelines
+- Keep React components focused on rendering and delegating to services for business logic.
+- Avoid importing UI files from utils/services; depend only on domain types.
+- Put shared types in `lib/domain` to prevent circular dependencies.
+- Prefer hooks only for UI state; use services for network and computation.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
