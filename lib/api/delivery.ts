@@ -17,9 +17,8 @@ export async function fetchDeliveryStates(
     return _cache.states;
   if (_inflight) return _inflight;
   _inflight = (async () => {
-    const r = await fetch(env.endpoints.deliveryStates, {
-      headers: apiHeaders(),
-    });
+    const url = typeof window === 'undefined' ? env.endpoints.deliveryStates : '/api/delivery/states';
+    const r = await fetch(url, { headers: typeof window === 'undefined' ? apiHeaders() : undefined });
     if (!r.ok) throw new Error(`Delivery mapping API failed: ${r.status}`);
     const data = await r.json();
     const result = Array.isArray(data?.result) ? data.result : [];
@@ -72,9 +71,9 @@ export async function fetchBranchIdsByStateCode(
     return cached.ids;
   const inflight = _branchIdsInflight[stateCode];
   if (inflight) return inflight;
-  const endpoint = env.endpoints.deliveryBranchIds(stateCode);
+  const endpoint = typeof window === 'undefined' ? env.endpoints.deliveryBranchIds(stateCode) : `/api/delivery/branch-ids/${encodeURIComponent(stateCode)}`;
   const promise = (async () => {
-    const r = await fetch(endpoint, { headers: apiHeaders() });
+    const r = await fetch(endpoint, { headers: typeof window === 'undefined' ? apiHeaders() : undefined });
     if (!r.ok) throw new Error(`BranchId API failed: ${r.status}`);
     const data = await r.json();
     const ids: string[] = Array.isArray(data?.result)

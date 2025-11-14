@@ -21,9 +21,11 @@ export async function fetchBranchGroups(
     return _cache.groups;
   if (_inflight) return _inflight;
   _inflight = (async () => {
-    const r = await fetch(env.endpoints.branchAll, { headers: apiHeaders() });
+    const url = typeof window === 'undefined' ? env.endpoints.branchAll : '/api/branches';
+    const r = await fetch(url, { headers: typeof window === 'undefined' ? apiHeaders() : undefined });
     if (!r.ok) throw new Error(`Branch API failed: ${r.status}`);
     const data = await r.json();
+    // Proxy returns { success, result }; direct upstream returns { result }
     const result = data?.result || [];
     const byId: Record<string, BranchGroup> = {};
     for (const branch of result) {
@@ -106,10 +108,13 @@ export async function fetchBranchReadiness(
   branchId: string,
   isDeliverToMe = false
 ): Promise<BranchReadinessResult> {
-  const url = env.endpoints.branchReadiness(branchId, isDeliverToMe);
-  const r = await fetch(url, { headers: apiHeaders() });
+  const url = typeof window === 'undefined'
+    ? env.endpoints.branchReadiness(branchId, isDeliverToMe)
+    : `/api/branch-readiness/${encodeURIComponent(branchId)}?isDeliverToMe=${isDeliverToMe}`;
+  const r = await fetch(url, { headers: typeof window === 'undefined' ? apiHeaders() : undefined });
   if (!r.ok) throw new Error(`Readiness API failed: ${r.status}`);
   const data = await r.json();
-  if (!data?.result) throw new Error("Invalid readiness response");
-  return data.result as BranchReadinessResult;
+  const result = data?.result;
+  if (!result) throw new Error("Invalid readiness response");
+  return result as BranchReadinessResult;
 }

@@ -81,9 +81,11 @@ export async function validateBooking(
 ): Promise<ValidateResponse> {
   const payload = buildValidationPayload(tabKey, data);
   try {
-    const r = await fetch(env.endpoints.bookingValidate, {
+    const url = typeof window === "undefined" ? env.endpoints.bookingValidate : "/api/booking/validate";
+    const headers = typeof window === "undefined" ? { "Content-Type": "application/json", ...apiHeaders() } : { "Content-Type": "application/json" };
+    const r = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...apiHeaders() },
+      headers,
       body: JSON.stringify(payload),
     });
     if (!r.ok) throw new Error(`Validate failed: ${r.status}`);
