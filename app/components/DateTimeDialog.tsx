@@ -155,8 +155,14 @@ export default function DateTimeDialog({
       setFirstDate(d);
       onChange({ pickupDateTime: formatDisplay(d, pickupTime) });
     } else if (!secondDate) {
-      setSecondDate(d);
-      onChange({ returnDateTime: formatDisplay(d, returnTime) });
+      if (d.getTime() < firstDate.getTime()) {
+        setFirstDate(d);
+        setHoverDate(null);
+        onChange({ pickupDateTime: formatDisplay(d, pickupTime) });
+      } else {
+        setSecondDate(d);
+        onChange({ returnDateTime: formatDisplay(d, returnTime) });
+      }
     } else {
       setFirstDate(d);
       setSecondDate(null);
@@ -172,6 +178,39 @@ export default function DateTimeDialog({
   };
   const handleDayMouseLeave = () => {
     if (selectingReturn) setHoverDate(null);
+  };
+
+  // Navigation handlers
+  const handlePrevMonth = () => {
+    if (canGoPrev) goPrev();
+  };
+  const handleNextMonth = () => {
+    goNext();
+  };
+
+  // Time adjust handlers
+  const handlePickupTimeChange = (newTime: string) => {
+    setPickupTime(newTime);
+    if (firstDate)
+      onChange({ pickupDateTime: formatDisplay(firstDate, newTime) });
+  };
+  const handleReturnTimeChange = (newTime: string) => {
+    setReturnTime(newTime);
+    if (secondDate)
+      onChange({ returnDateTime: formatDisplay(secondDate, newTime) });
+  };
+
+  // Range label computation
+  const getRangeLabel = () => {
+    if (!firstDate) return "";
+    const endRef = secondDate || (selectingReturn && hoverDate) || firstDate;
+    const msPerDay = 86400000;
+    const diff =
+      Math.round((endRef.getTime() - firstDate.getTime()) / msPerDay) + 1;
+    if (diff <= 1) return "1 day";
+    return (
+      `${diff} days` + (selectingReturn && !secondDate ? " (preview)" : "")
+    );
   };
 
   if (!open) return null;
@@ -193,7 +232,7 @@ export default function DateTimeDialog({
       </div>
       <div
         ref={dialogRef}
-        className="h-[calc(100vh-3.2rem)] md:h-auto md:w-[80vw] md:rounded-2xl md:shadow-xl md:border md:border-gray-200 md:bg-white flex flex-col md:flex-row md:items-stretch md:justify-start md:p-0 overflow-y-auto md:overflow-hidden mx-auto relative"
+        className="h-[calc(100vh-3.2rem)] md:h-auto md:w-[90vw] lg:w-[80vw] md:shadow-lg md:border md:border-gray-200 md:bg-white flex flex-col md:flex-row md:items-stretch md:justify-start md:p-0 overflow-y-auto md:overflow-hidden mx-auto relative"
       >
         <div className="hidden md:flex flex-col basis-[40%] bg-gray-50 border-r border-gray-200 p-8 pr-6">
           <div className="space-y-8">
@@ -232,11 +271,11 @@ export default function DateTimeDialog({
             )}
           </div>
         </div>
-        <div className="relative basis-[60%] px-4 md:px-8 py-6 md:py-8">
+        <div className="relative basis-[60%] px-4 md:px-4 lg:px-8 x py-6 md:py-8">
           <div className="flex items-start justify-between gap-6 relative mb-6">
             <button
               type="button"
-              onClick={() => canGoPrev && goPrev()}
+              onClick={handlePrevMonth}
               aria-label="Previous months"
               className={`absolute left-0 -top-1 p-2 rounded-md ${
                 canGoPrev
@@ -276,7 +315,7 @@ export default function DateTimeDialog({
             </div>
             <button
               type="button"
-              onClick={goNext}
+              onClick={handleNextMonth}
               aria-label="Next months"
               className="absolute right-0 -top-1 p-2 rounded-md text-black hover:bg-gray-100"
             >
@@ -290,20 +329,7 @@ export default function DateTimeDialog({
             >
               <div className="border border-gray-200 rounded-md px-4 py-2 flex items-center space-x-3 bg-white">
                 <span className="text-sm font-medium text-black">
-                  {(() => {
-                    const endRef =
-                      secondDate || (selectingReturn && hoverDate) || firstDate;
-                    const msPerDay = 86400000;
-                    const diff =
-                      Math.round(
-                        (endRef.getTime() - firstDate.getTime()) / msPerDay
-                      ) + 1;
-                    if (diff <= 1) return "1 day";
-                    return (
-                      `${diff} days` +
-                      (selectingReturn && !secondDate ? " (preview)" : "")
-                    );
-                  })()}
+                  {getRangeLabel()}
                 </span>
               </div>
             </div>
@@ -319,13 +345,7 @@ export default function DateTimeDialog({
                 label="Pickup Date & Time"
                 time={pickupTime}
                 date={firstDate}
-                onChange={(newTime) => {
-                  setPickupTime(newTime);
-                  if (firstDate)
-                    onChange({
-                      pickupDateTime: formatDisplay(firstDate, newTime),
-                    });
-                }}
+                onChange={handlePickupTimeChange}
               />
             </div>
             {!singleMode && (
@@ -334,13 +354,7 @@ export default function DateTimeDialog({
                   label="Return Date & Time"
                   time={returnTime}
                   date={secondDate}
-                  onChange={(newTime) => {
-                    setReturnTime(newTime);
-                    if (secondDate)
-                      onChange({
-                        returnDateTime: formatDisplay(secondDate, newTime),
-                      });
-                  }}
+                  onChange={handleReturnTimeChange}
                 />
               </div>
             )}

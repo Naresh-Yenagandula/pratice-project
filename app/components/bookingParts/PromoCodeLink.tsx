@@ -24,7 +24,7 @@ export default function PromoCodeLink({
             <button
               type="button"
               onClick={onAdd}
-              className="flex items-center gap-2 font-medium text-black text-[11px] md:text-xs xl:text-sm"
+              className="flex items-center gap-2 font-medium text-black text-[11px] md:text-xs xl:text-sm cursor-pointer"
             >
               <Ticket size={14} className="md:hidden" />
               <Ticket size={16} className="hidden md:block" />
@@ -34,7 +34,7 @@ export default function PromoCodeLink({
             <button
               type="button"
               onClick={onRemove}
-              className="text-red-600 underline text-[11px] md:text-xs xl:text-sm ml-2"
+              className="text-red-600 underline text-[11px] md:text-xs xl:text-sm ml-2 cursor-pointer"
               aria-label="Remove promo code"
             >
               Remove
@@ -44,7 +44,7 @@ export default function PromoCodeLink({
           <button
             type="button"
             onClick={onAdd}
-            className="flex items-center gap-2 font-bold text-black text-[11px] md:text-xs lg:text-sm xl:text-sm 2xl:text-base"
+            className="flex items-center gap-2 font-bold text-black text-[11px] md:text-xs lg:text-xs xl:text-sm 2xl:text-base cursor-pointer"
           >
             <Ticket size={14} className="md:hidden" />
             <Ticket size={16} className="hidden md:block" />

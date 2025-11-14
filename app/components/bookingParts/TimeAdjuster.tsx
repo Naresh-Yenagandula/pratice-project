@@ -40,7 +40,7 @@ export function TimeAdjuster({
           <span className="block lg:hidden">{label.split(" ")[0]}</span>
           <span className="hidden lg:block">{label}</span>
         </p>
-        <p className="font-semibold text-gray-700 text-lg lg:text-base truncate">
+        <p className="font-semibold text-gray-700 text-sm lg:text-base">
           {combinedLabel}
         </p>
       </div>

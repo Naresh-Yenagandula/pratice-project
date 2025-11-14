@@ -37,7 +37,7 @@ export default function BookingTab() {
                 tabIndex={isActive ? 0 : -1}
                 onClick={() => setActiveTab(t.key)}
                 className={`
-                                    whitespace-nowrap px-4 py-3 text-base sm:text-lg md:text-xl xl:text-xl 2xl:text-2xl md:px-5 md:py-5 xl:py-5 border-b-2 transition-colors
+                                    whitespace-nowrap px-4 py-3 text-base sm:text-lg md:text-base xl:text-xl 2xl:text-2xl md:px-5 md:py-4 xl:py-5 border-b-2 transition-colors
                                     ${
                                       isActive
                                         ? "border-red-600 text-red-600 font-bold"

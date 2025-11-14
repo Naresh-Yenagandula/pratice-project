@@ -13,7 +13,9 @@ export default function LocationPicker({
   field,
   onSelect,
   onClose,
+  externalQuery,
 }: LocationPickerProps) {
+  // Start with empty query so reopening after selection shows all options
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -36,6 +38,20 @@ export default function LocationPicker({
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (externalQuery === undefined) return;
+    if (!groups.length) return;
+    const exactMatch = groups.some((g) =>
+      g.branches.some((b) => b.name === externalQuery)
+    );
+    if (exactMatch) {
+
+      setQuery("");
+    } else {
+      setQuery(externalQuery);
+    }
+  }, [externalQuery, groups]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -78,6 +94,8 @@ export default function LocationPicker({
       stateName: loc.stateName,
       address: loc.address,
     });
+    // Clear the search query after selecting an option
+    setQuery("");
     onClose();
   };
 
@@ -93,7 +111,7 @@ export default function LocationPicker({
         field === "pickup" ? "Select pickup location" : "Select return location"
       }
       ref={containerRef}
-      className="z-50 fixed inset-0 w-full h-screen md:static md:h-[60vh] md:w-[90vw] lg:w-[80vw] md:rounded-2xl md:shadow-xl md:border md:border-gray-200 bg-white text-sm flex flex-col"
+      className="z-50 fixed inset-0 w-full h-screen md:static md:h-[60vh] md:w-[90vw] lg:w-[80vw] md:shadow-lg md:border md:border-gray-200 bg-white text-sm flex flex-col"
     >
       <MobileHeader
         field={field}

@@ -22,7 +22,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: sans-serif;
 }
 
 /* Component utility classes extracted from repeated Tailwind patterns */
@@ -72,7 +72,7 @@ body {
   }
 
   .input-base::placeholder {
-    color: #9ca3af;
+    color: #62656b;
     font-weight: 700;
   }
 
@@ -231,7 +231,15 @@ body {
     background-color: #ffe5e5;
   }
 
-  @media (max-width: 768px) {
+    @media (max-width: 1025) {
+    .booking-input {
+      font-size: 0.700rem;
+      padding: 0.75rem 0.4rem 0.75rem 2.0rem;
+      line-height: 0.6;
+    }
+  }
+
+  @media (max-width: 767px) {
     .booking-input {
       font-size: 0.875rem;
       padding: 0.75rem 1rem 0.75rem 2.5rem; /* increased height */

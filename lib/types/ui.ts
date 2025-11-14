@@ -17,6 +17,11 @@ export interface LocationPickerProps {
     }
   ) => void;
   onClose: () => void;
+  /**
+   * External query coming from the LocationField's input value.
+   * When provided, the picker will use it to filter locations.
+   */
+  externalQuery?: string;
 }
 
 export interface LocationFieldProps {

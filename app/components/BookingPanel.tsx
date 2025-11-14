@@ -16,9 +16,7 @@ const DeliveryDialog = dynamic(() => import("./DeliveryDialog"), {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBooking } from "./BookingContext";
-import { validateBooking } from "../../lib/api/bookingValidation";
 import { BookingPanelProps } from "../../lib/types/ui";
-import { ValidateResponse } from "../../lib/types/bookingValidation";
 import { composeLocationPatch } from "../../lib/utils/bookingData";
 import LocationField from "./bookingParts/LocationField";
 import DateTimeField from "./bookingParts/DateTimeField";
@@ -68,33 +66,16 @@ export default function BookingPanel({
     onChange(composeLocationPatch(field, value, sameReturn, meta));
   };
 
-  const [submitLoading, setSubmitLoading] = useState(false);
   const [validationMessage, setValidationMessage] = useState<string | null>(
     null
   );
   const [showValidateModal, setShowValidateModal] = useState(false);
-
-  async function callValidateAPI(): Promise<ValidateResponse> {
-    setValidationMessage(null);
-    const res = await validateBooking(tabKey, data);
-    return res;
-  }
 
   return (
     <form
       className="flex flex-col gap-1 "
       onSubmit={async (e) => {
         e.preventDefault();
-        if (submitLoading) return;
-        setSubmitLoading(true);
-        const result = await callValidateAPI();
-        setSubmitLoading(false);
-        if (!result.success) return;
-        if (!result.isPassed) {
-          setValidationMessage(result.message || "Validation failed");
-          setShowValidateModal(true);
-          return;
-        }
 
         try {
           sessionStorage.setItem(
@@ -139,11 +120,13 @@ export default function BookingPanel({
             onChange(
               checked
                 ? { sameReturn: true, returnLocation: "" }
-                : { sameReturn: false, returnLocation: "" }
+                : { sameReturn: false }
             )
           }
           wrapperClassName={
-            sameReturn && showReturnLocation ? "lg:col-span-2" : ""
+            sameReturn && showReturnLocation
+              ? "md:col-span-2 lg:col-span-2"
+              : ""
           }
           actionButton={
             showReturnLocation ? (
@@ -173,7 +156,7 @@ export default function BookingPanel({
               onChange(
                 checked
                   ? { sameReturn: true, returnLocation: "" }
-                  : { sameReturn: false, returnLocation: "" }
+                  : { sameReturn: false }
               )
             }
             actionButton={
@@ -213,10 +196,10 @@ export default function BookingPanel({
         <div className="flex flex-col gap-2">
           <button
             type="submit"
-            disabled={submitLoading}
-            className="w-full whitespace-nowrap btn-primary px-4 md:px-5 lg:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-sm lg:text-xs xl:text-sm 2xl:text-base disabled:opacity-60"
+            className="w-full md:w-40 lg:w-25 xl:w-35 whitespace-nowrap btn-primary px-4 md:px-5 lg:px-5 xl:px-5 2xl:px-6 py-2 md:py-2 lg:py-2 xl:py-2 2xl:py-3 text-base md:text-sm lg:text-xs xl:text-sm 2xl:text-base disabled:opacity-60"
+            style={{ lineHeight: 1.1 }}
           >
-            {submitLoading ? "Validating..." : "Show cars"}
+            Show cars
           </button>
           <PromoCodeLink
             variant="mobile"
@@ -231,6 +214,9 @@ export default function BookingPanel({
           <div className="absolute z-50" role="presentation left-0">
             <LocationPicker
               field={openField}
+              externalQuery={
+                openField === "pickup" ? pickupLocation : returnLocation
+              }
               onSelect={(val, field, meta) => handleLocChange(field, val, meta)}
               onClose={closePicker}
             />

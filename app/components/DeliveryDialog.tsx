@@ -33,6 +33,71 @@ export default function DeliveryDialog({
   const [branchLoading, setBranchLoading] = useState(false);
   const [branchError, setBranchError] = useState<string | null>(null);
 
+  // Build full address string
+  const buildFullAddress = () =>
+    `${stateName}${stateName && address ? ", " : ""}${address}`.trim();
+
+  // Apply booking data patch based on target and sameReturn flag
+  const applyLocationPatch = (full: string) => {
+    const stateObj = states.find((s) => s.code === stateCode);
+    if (target === "pickup") {
+      const patch: any = {
+        pickupLocation: full,
+        pickupMode: "deliver",
+        deliveryStateName: stateName,
+        deliveryStateCode: stateObj?.code || "",
+        deliveryAddress: address,
+      };
+      if (sameReturn) {
+        patch.returnLocation = full;
+        patch.returnMode = "deliver";
+      }
+      updateTabData(activeTab, patch);
+    } else {
+      updateTabData(activeTab, {
+        returnLocation: full,
+        returnMode: "collect",
+        collectStateName: stateName,
+        collectStateCode: stateObj?.code || "",
+        collectAddress: address,
+      });
+    }
+  };
+
+  // Fetch readiness and update date-times
+  const applyReadinessPatch = async () => {
+    if (!branchId) return;
+    try {
+      const readiness = await fetchBranchReadiness(
+        branchId,
+        target === "pickup"
+      );
+      const pickupDT = formatDubaiDateTime(readiness.PickupOn);
+      const returnDT = formatDubaiDateTime(readiness.ReturnOn);
+      if (target === "pickup") {
+        updateTabData(activeTab, {
+          pickupDateTime: pickupDT,
+          returnDateTime: returnDT,
+        });
+      } else {
+        updateTabData(activeTab, {
+          pickupDateTime: dataByTab[activeTab].pickupDateTime,
+          returnDateTime: returnDT,
+        });
+      }
+    } catch {
+      // Silently ignore readiness failure per original implementation
+    }
+  };
+
+  // Unified submit handler (mobile Continue & desktop Submit)
+  const handleSubmit = async () => {
+    const full = buildFullAddress();
+    applyLocationPatch(full);
+    await applyReadinessPatch();
+    onClose();
+  };
+
   useEffect(() => {
     if (!stateCode) {
       setBranchId(null);
@@ -92,7 +157,7 @@ export default function DeliveryDialog({
     >
       <div
         ref={ref}
-        className="w-full h-full md:h-auto bg-white rounded-none md:rounded-2xl shadow-none md:shadow-xl overflow-hidden flex flex-col"
+        className="w-full h-full md:h-auto bg-white rounded-none shadow-none md:shadow-lg overflow-hidden flex flex-col"
       >
         {/* Header */}
         <div className="border-b flex items-center gap-4">
@@ -123,7 +188,7 @@ export default function DeliveryDialog({
               <X size={20} />
             </button>
           </div>
-          <div className="hidden md:flex items-center w-full px-6 py-6">
+          <div className="hidden md:flex items-center w-full px-6 py-2">
             <button
               onClick={() => {
                 if (step === "address") {
@@ -136,33 +201,24 @@ export default function DeliveryDialog({
             >
               <ArrowLeft size={18} /> Back
             </button>
-            <h2 className="text-2xl font-semibold text-gray-700 flex items-center gap-3 ml-4">
+            <h2 className="text-lg font-semibold text-gray-700 flex items-center gap-3 ml-4">
               <Truck size={22} />{" "}
               {target === "pickup" ? "Deliver to me" : "Collect from me"}
             </h2>
-            <div className="ml-auto">
-              <button
-                onClick={onClose}
-                aria-label="Close"
-                className="p-2 text-gray-600 hover:text-black"
-              >
-                <X size={22} />
-              </button>
-            </div>
           </div>
         </div>
         <div className="flex-1 flex flex-col">
-          <div className="md:hidden flex items-center justify-center gap-6 py-3 text-lg font-semibold">
-            <span className={step === "city" ? "text-black" : "text-gray-400"}>
+          <div className="md:hidden flex items-center justify-center gap-1 text-sm py-3 md:text-base">
+            <span className={step === "city" ? "text-black font-semibold" : "text-gray-400"}>
               Choose City
             </span>
             <span>
               <ChevronRight />
             </span>
             <span
-              className={step === "address" ? "text-black" : "text-gray-400"}
+              className={step === "address" ? "text-black font-semibold" : "text-gray-400"}
             >
-              Address
+              Your Address / Location
             </span>
           </div>
           <div className="md:hidden h-full flex flex-col px-4 py-4">
@@ -243,61 +299,7 @@ export default function DeliveryDialog({
                   <button
                     type="button"
                     disabled={!address}
-                    onClick={async () => {
-                      const full = `${stateName}${
-                        stateName && address ? ", " : ""
-                      }${address}`.trim();
-                      const stateObj = states.find((s) => s.code === stateCode);
-                      if (target === "pickup") {
-                        const patch: any = {
-                          pickupLocation: full,
-                          pickupMode: "deliver",
-                          deliveryStateName: stateName,
-                          deliveryStateCode: stateObj?.code || "",
-                          deliveryAddress: address,
-                        };
-                        if (sameReturn) {
-                          patch.returnLocation = full;
-                          patch.returnMode = "deliver";
-                        }
-                        updateTabData(activeTab, patch);
-                      } else {
-                        updateTabData(activeTab, {
-                          returnLocation: full,
-                          returnMode: "collect",
-                          collectStateName: stateName,
-                          collectStateCode: stateObj?.code || "",
-                          collectAddress: address,
-                        });
-                      }
-                      if (branchId) {
-                        try {
-                          const readiness = await fetchBranchReadiness(
-                            branchId,
-                            target === "pickup"
-                          );
-                          const pickupDT = formatDubaiDateTime(
-                            readiness.PickupOn
-                          );
-                          const returnDT = formatDubaiDateTime(
-                            readiness.ReturnOn
-                          );
-                          if (target === "pickup") {
-                            updateTabData(activeTab, {
-                              pickupDateTime: pickupDT,
-                              returnDateTime: returnDT,
-                            });
-                          } else {
-                            updateTabData(activeTab, {
-                              pickupDateTime:
-                                dataByTab[activeTab].pickupDateTime,
-                              returnDateTime: returnDT,
-                            });
-                          }
-                        } catch {}
-                      }
-                      onClose();
-                    }}
+                    onClick={handleSubmit}
                     className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-semibold rounded-md py-3 text-base"
                   >
                     Continue
@@ -306,7 +308,7 @@ export default function DeliveryDialog({
               </>
             )}
           </div>
-          <div className="hidden md:block p-6">
+          <div className="hidden md:block px-6 py-4">
             <div className="grid md:grid-cols-12 gap-6 items-start">
               <div className="md:col-span-5">
                 <label className="block text-base font-semibold text-black mb-2">
@@ -323,7 +325,9 @@ export default function DeliveryDialog({
                     }}
                     className="select-base"
                   >
-                    <option value="" className="text-gray-400 bg-gray-50">Choose City</option>
+                    <option value="" className="text-gray-400 bg-gray-50">
+                      Choose City
+                    </option>
                     {statesLoading && (
                       <option value="" disabled>
                         Loading...
@@ -367,61 +371,8 @@ export default function DeliveryDialog({
                 <button
                   type="button"
                   disabled={!stateCode && !address}
-                  onClick={async () => {
-                    const full = `${stateName}${
-                      stateName && address ? ", " : ""
-                    }${address}`.trim();
-                    const stateObj = states.find((s) => s.code === stateCode);
-                    if (target === "pickup") {
-                      const patch: any = {
-                        pickupLocation: full,
-                        pickupMode: "deliver",
-                        deliveryStateName: stateName,
-                        deliveryStateCode: stateObj?.code || "",
-                        deliveryAddress: address,
-                      };
-                      if (sameReturn) {
-                        patch.returnLocation = full;
-                        patch.returnMode = "deliver";
-                      }
-                      updateTabData(activeTab, patch);
-                    } else {
-                      updateTabData(activeTab, {
-                        returnLocation: full,
-                        returnMode: "collect",
-                        collectStateName: stateName,
-                        collectStateCode: stateObj?.code || "",
-                        collectAddress: address,
-                      });
-                    }
-                    if (branchId) {
-                      try {
-                        const readiness = await fetchBranchReadiness(
-                          branchId,
-                          target === "pickup"
-                        );
-                        const pickupDT = formatDubaiDateTime(
-                          readiness.PickupOn
-                        );
-                        const returnDT = formatDubaiDateTime(
-                          readiness.ReturnOn
-                        );
-                        if (target === "pickup") {
-                          updateTabData(activeTab, {
-                            pickupDateTime: pickupDT,
-                            returnDateTime: returnDT,
-                          });
-                        } else {
-                          updateTabData(activeTab, {
-                            pickupDateTime: dataByTab[activeTab].pickupDateTime,
-                            returnDateTime: returnDT,
-                          });
-                        }
-                      } catch {}
-                    }
-                    onClose();
-                  }}
-                  className="w-full btn-primary px-6 py-3 text-base font-semibold mt-8"
+                  onClick={handleSubmit}
+                  className="w-full btn-primary px-1 py-3 text-base font-semibold mt-8"
                 >
                   Submit
                 </button>
