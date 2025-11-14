@@ -323,7 +323,7 @@ export default function DeliveryDialog({
                     }}
                     className="select-base"
                   >
-                    <option value="">Choose City</option>
+                    <option value="" className="text-gray-400 bg-gray-50">Choose City</option>
                     {statesLoading && (
                       <option value="" disabled>
                         Loading...
@@ -337,7 +337,11 @@ export default function DeliveryDialog({
                     {!statesLoading &&
                       !statesError &&
                       states.map((s) => (
-                        <option key={s.code || s.name} value={s.code}>
+                        <option
+                          key={s.code || s.name}
+                          value={s.code}
+                          className="px-4 py-2 hover:bg-gray-100"
+                        >
                           {s.name}
                         </option>
                       ))}
