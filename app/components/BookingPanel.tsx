@@ -119,7 +119,7 @@ export default function BookingPanel({
           onToggleSameReturn={(checked) =>
             onChange(
               checked
-                ? { sameReturn: true, returnLocation: "" }
+                ? { sameReturn: true, returnLocation: pickupLocation }
                 : { sameReturn: false }
             )
           }
@@ -155,7 +155,7 @@ export default function BookingPanel({
             onToggleSameReturn={(checked) =>
               onChange(
                 checked
-                  ? { sameReturn: true, returnLocation: "" }
+                  ? { sameReturn: true, returnLocation: pickupLocation }
                   : { sameReturn: false }
               )
             }

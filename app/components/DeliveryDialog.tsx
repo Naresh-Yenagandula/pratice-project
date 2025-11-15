@@ -221,11 +221,11 @@ export default function DeliveryDialog({
               Your Address / Location
             </span>
           </div>
-          <div className="md:hidden h-full flex flex-col px-4 py-4">
+          <div className="md:hidden flex flex-col px-4 py-4 mb-6" style={{height: "90%"}}>
             {step === "city" && (
               <>
                 {statesLoading && (
-                  <div className="px-2 py-2 text-xs text-gray-500">
+                  <div className="px-2 py-2 text-xs text-gray-500 ">
                     Loading cities...
                   </div>
                 )}
